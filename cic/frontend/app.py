@@ -56,11 +56,11 @@ def signup():
         return redirect(url_for('frontend.index'))
 
     form = SignUpForm()
+    err = None
 
     if form.validate_on_submit():
         email = form.email.data
         admin = False
-        err = None
 
         user = User.query.filter_by(email=email).first()
 
@@ -70,7 +70,7 @@ def signup():
             if email in ['ashleyboucher@hey.com', 'ashleyhlivingston@gmail.com', 'ashleyhboucher@gmail.com']:
                 admin = True
 
-            user = User(email=form.email.data, admin=admin)
+            user = User(email=form.email.data, name=form.name.data, admin=admin)
             user.set_password(form.password.data)
 
             db.session.add(user)
@@ -78,6 +78,7 @@ def signup():
 
             login_user(user)
             return redirect(url_for('frontend.index'))
+
     return render_template('frontend/signup.html', form=form, err=err)
 
 

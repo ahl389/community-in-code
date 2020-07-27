@@ -141,7 +141,8 @@ input[type=submit] {
   box-shadow: none;
   border-radius: 25px;
   padding: 0;
-  color: white; }
+  color: white;
+  cursor: pointer; }
 
 .error {
   color: red;
