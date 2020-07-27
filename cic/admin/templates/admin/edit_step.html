@@ -1,0 +1,107 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module w100 mbm">
+            <h2>Edit Step</h2>
+        </div>
+
+        <div class="module w50 prl">
+            <div class="container">
+                <div class="module w100">
+                    <h3 class="mbs">Details</h3>
+                    <form action="" method="post" novalidate>
+                        <div class="module pbm mbm overview">
+                            {{ step_form.hidden_tag() }}
+
+                            <p>
+                                {{ step_form.title.label }}<br>
+                                {{ step_form.title(class="input-title") }}
+                            </p>
+                            <p>
+                                {{ step_form.description.label }}<br>
+                                {{ step_form.description(rows=8) }}
+                            </p>
+
+                            <label>Stage</label><br>
+                            <select class="select" name="parent_stage">
+                                {% for stage in stages %}
+                                {% if stage.id == step.parent_stage %}
+                                <option selected=selected value={{stage.id}}>{{stage.title}}</option>
+                                {% else %}
+                                <option value={{stage.id}}>{{stage.title}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="module w100">
+                            <h3 class="mbm">Content</h3>
+                            {{ step_form.content(only_input=True, rows=20) }}
+                        </div>
+
+                        <p>{{ step_form.submit(class="button light bottom-fixed module w40") }}</p>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="module w45 content-preview">
+            <h3 class="mbm">Content Preview</h3>
+            {{ step_form.content(only_preview=True) }}
+        </div>
+
+    </div>
+</section>
+
+<script>
+    $('#button-add-stage').on('click', function () {
+        $('.stage-form').show();
+    });
+
+    $('#button-add-step').on('click', function () {
+        $('.step-form').show();
+    });
+
+    $('#button-cancel-add').on('click', function () {
+        $(this).parent().hide();
+    });
+</script>
+
+<script src="{{ url_for('admin.static', filename='js/draggable.js') }}"></script>
+
+<style>
+    #stage-order {
+        display: none;
+    }
+
+    .step-form {
+        display: none
+    }
+
+    .hidden-form {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .input-title {
+        font-size: 2em;
+    }
+
+    .bottom-fixed {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+    }
+
+    .content-preview {
+        position: fixed;
+        right: 5%;
+        padding-bottom: 100px;
+        overflow: scroll;
+    }
+</style>
+
+{% endblock %}

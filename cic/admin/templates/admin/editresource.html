@@ -1,0 +1,79 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module w100 mbm">
+            <h2>Edit {{resource.resource_type}}</h2>
+        </div>
+
+        <div class="module w50 prl">
+            <div class="container">
+                <div class="module w100 pbm mbm overview">
+                    <h3 class="mbs">Details</h3>
+                    <form action="" method="post" novalidate>
+                        {{ resource_form.hidden_tag() }}
+
+                        <p>
+                            {{ resource_form.title.label }}<br>
+                            {{ resource_form.title(class="input-title") }}
+                        </p>
+                        <p>
+                            {{ resource_form.resource_type.label }}<br>
+                            {{ resource_form.resource_type(class="select") }}
+                        </p>
+                        <p>
+                            {{ resource_form.description.label }}<br>
+                            {{ resource_form.description(rows=8) }}
+                        </p>
+
+                        <p>{{ resource_form.submit(class="button light bottom-fixed module w40") }}</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    $('#button-add-stage').on('click', function () {
+        $('.stage-form').show();
+    });
+
+    $('#button-add-step').on('click', function () {
+        $('.step-form').show();
+    });
+
+    $('#button-cancel-add').on('click', function () {
+        $(this).parent().hide();
+    });
+</script>
+
+<script src="{{ url_for('admin.static', filename='js/draggable.js') }}"></script>
+
+<style>
+    #stage-order {
+        display: none;
+    }
+
+    .step-form {
+        display: none
+    }
+
+    .hidden-form {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .input-title {
+        font-size: 2em;
+    }
+
+    .bottom-fixed {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+    }
+</style>
+
+{% endblock %}

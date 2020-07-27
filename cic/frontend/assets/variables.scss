@@ -1,0 +1,41 @@
+/* Padding, margin */
+$mini: 8px;
+$small: 15px;
+$medium: 30px;
+$large: 50px;
+$xl: 100px;
+
+/* Font */
+$mini-font: .6em;
+$small-font: .8em;
+$medium-font: 1em;
+$large-font: 1.25em;
+$xl-font: 1.75em;
+$x2-font: 2.5em;
+$x3-font: 3.5em;
+$x4-font: 4em;
+
+$heading-font-family: 'Nunito', sans-serif;
+$content-font-family: 'Nunito', sans-serif;
+
+/* Breakpoints */
+$mobile: 768px;
+$tablet: 1024px;
+
+/* Colors */
+$primary-color: #333;
+$secondary-color: #fefe77;
+$accent-color: #2a1758;
+$panel-color: $secondary-color;
+$button-color: $accent-color;
+$inverse: #ffffff;
+
+/* Shadow/Card */
+$shadow: 0px 0px 25px 3px #eee;
+$border-radius: 25px;
+
+
+@mixin card {
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+}

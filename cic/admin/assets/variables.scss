@@ -1,0 +1,76 @@
+/* Padding, margin */
+$mini: 8px;
+$small: 15px;
+$medium: 30px;
+$large: 50px;
+$xl: 100px;
+
+/* Font */
+$mini-font: .6em;
+$small-font: .8em;
+$medium-font: 1em;
+$large-font: 1.25em;
+$xl-font: 1.5em;
+$x2-font: 2.25em;
+$x3-font: 3em;
+$x4-font: 4em;
+$heading-font: 'Barlow Semi Condensed', sans-serif;
+$body-font: 'Barlow Semi Condensed', sans-serif;
+$code-font: 'Inconsolata', monospace;
+
+
+/* Breakpoints */
+$mobile: 768px;
+$tablet: 1024px;
+
+/* Colors */
+$primary-color: #433734;
+$secondary-color: #E5863b;
+$accent-color: #Edb069;
+$accent-color2: #009cde;
+$accent-color3: #1d428a;
+$accent-color4: #f93822;
+$panel-color: $secondary-color;
+$button-color: $accent-color;
+
+/* Border */
+$border-radius: 6px;
+$border: 1px solid #ddd;
+$border-over: 1px dashed $accent-color3;
+
+/* Style */
+$box-shadow: 0px 3px 10px -5px #bbb;
+
+/* Mixins */
+@mixin card-highlight-style {
+    box-shadow: $box-shadow;
+    border-radius: $border-radius;
+    background-color: white;
+}
+
+/* Themes */
+.light {
+    background-color: $accent-color2;
+    color: white;
+}
+
+.inverse {
+    background-color: white;
+    color: $secondary-color;
+}
+
+.inverse:hover {
+    @include card-highlight-style;
+}
+
+.dark {
+    background-color: $primary-color;
+    color: white;
+}
+
+.inverse-mini {
+    padding-left: 0px;
+    padding-right: 0px;
+    border-radius: 0px;
+    border-bottom: 2px solid $secondary-color;
+}

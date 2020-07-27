@@ -1,0 +1,43 @@
+{% extends 'frontend/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module w60">
+            <div class="container">
+                {% if current_user.is_authenticated %}
+                {% set user_name = current_user.name %}
+                {% else %}
+                {% set user_name = 'User' %}
+                {% endif %}
+
+                <p>Dear {{ user_name }}, <br><br>
+                    Welcome to Community in Code. If you're seeing this, you're looking at a beta version of both
+                    Community in Code's website and the Learn to Code with Python course. Your feedback is vitally
+                    important and I'm really looking forward to hearing where it can improve.</p>
+
+                <p>Something to note: Right now, only the fundamentals unit is done. I have a vision of creating levels
+                    for each lesson in a unit, where each level goes into more detail and is more complex than the
+                    previous. This is not done yet, and every lesson here is in its "level 1" form.</p>
+
+                <p>Right now, Learn to Code with Python is entirely text-based. As it evolves in the coming months I
+                    hope to add video content as well. Also, I intend to add longer-form practice projects, integrated
+                    assessment, and more coding challenges.</p>
+
+                <p>Other thing to note: Basic membership to Community in Code, which will always include the Learn to
+                    Code with Python course, is free and will always be free. Eventually I plan to offer a low-cost paid
+                    membership that will include several additional and more advanced courses, a slack group, and a job
+                    board and networking for URPs. If Community in Code becomes truly successful, I'd like to also
+                    eventually provide access to group health insurance purchasing and other benefits for paid members.
+                </p>
+
+                <p>Right now, those are all far away dreams of what Community in Code can achieve. In the meantime, I'm
+                    still working on getting the website right and making Learn to Code with Python really great. As I
+                    said before, your feedback is integral to helping build this thing. I can't do it without you.</p>
+
+                <p>xoxo,<br>Ashley</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

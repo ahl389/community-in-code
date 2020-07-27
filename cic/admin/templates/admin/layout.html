@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('frontend.static', filename='css/paint.css') }}">
+    <title>{% block title %}Community in Code{% endblock %}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d7c065113f.js" crossorigin="anonymous"></script>
+    {{ pagedown.include_pagedown() }}
+    {% endblock %}
+</head>
+
+<body>
+    <section class="banner" id="banner-horizontal-navigation">
+        <div class="container-extender align-middle">
+            <div class="module self-align-left" id="logo">
+                <a href="{{url_for('admin.index')}}">
+                    <h1 class="xl">Community in Code - Admin</h1>
+                </a>
+            </div>
+
+            <!-- <div class="module w30 pm mrm self-align-right quick-search">
+                <form action="" id="quick-search">
+                    <div class="container">
+                        <input type=text class="module w80 small" id="query" placeholder="Find content" />
+                        <input type="submit" class="module w15 self-align-right" value="Go" />
+                    </div>
+                </form>
+
+                <div class="module w30 ps quick-search-results">
+
+                </div>
+            </div> -->
+
+            <!-- <div class="module plm self-align-right">
+                
+            </div> -->
+
+            <div class="module self-align-right">
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('admin.logout') }}">Logout</a>
+                {% else %}
+                <a class="prm" href="{{ url_for('admin.login') }}">Login</a>
+                <a href="{{ url_for('admin.signup') }}">Create Account</a>
+                {% endif %}
+            </div>
+
+        </div>
+    </section>
+
+    {% block content %}
+
+    {% endblock %}
+</body>
+
+</html>
+
+<style>
+    .quick-search {
+        position: relative;
+    }
+
+    .quick-search-results {
+        position: absolute;
+        width: 100%;
+    }
+
+    .quick-search-results.show {
+
+        background-color: white;
+        border: 1px solid #ddd;
+        margin-top: 15px;
+    }
+</style>
+
+<script>
+    $('#quick-search').on('submit', function (e) {
+        e.preventDefault();
+        const query = $('#query').val();
+        $('.quick-search-results').removeClass('show').empty();
+
+        $.ajax({
+            type: 'GET',
+            url: `http://localhost:5000/api/v1/courses?query=${query}`,
+        }).done(function (data) {
+            console.log(data)
+            for (let course of data.courses) {
+                let url = `{{ url_for('admin.view_course', course_id="") }}`
+                url += course.id;
+
+                $('.quick-search-results').append(
+                    `<div class = "module w100">
+                    <a href = ${url}>
+                        ${course.title}
+                    </a>
+                </div>`
+                ).addClass('show')
+            }
+        });
+    });
+</script>

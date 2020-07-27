@@ -1,0 +1,138 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module w65 prl">
+            <div class="container">
+                <div class="module w100 pbm mbm overview">
+                    <h2>{{step.title}}</h2>
+                    <p>{{step.description}}</p>
+                </div>
+
+                <div class="module w100">
+                    {{ step.content | markdown  }}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="module w35 pll">
+            <div class="container">
+                <div class="module large w100 button light mbs text-center" id="button-edit-resource">
+                    <a href="{{ url_for('admin.edit_step', step_id=step.id) }}" id="a-edit-resource">
+                        Edit Step Details
+                    </a>
+                </div>
+
+                <div class="module large w100 button light mbs text-center" id="button-edit-resource">
+                    <a href="{{ url_for('admin.view_stage', stage_id=step.parent_stage) }}" id="a-edit-resource">
+                        Back to Stage
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+</section>
+
+<script>
+    let activeButton = false;
+
+    $('.button').on('click', function () {
+        if (!activeButton) {
+            $('.button').css('opacity', 1);
+            $(this).siblings('.button').css('opacity', .4);
+            activeButton = true;
+        }
+    });
+
+    $('#a-edit-resource').on('click', function (e) {
+        if (activeButton) {
+            e.preventDefault();
+        }
+    });
+
+    $('#button-add-stage').on('click', function () {
+        //if (activeButton === false) {
+        $('.stage-form').show();
+        //}
+    });
+
+    $('#button-add-step').on('click', function () {
+        //if (activeButton === false) {
+        $('.step-form').show();
+        //}
+    });
+
+    $('.button-cancel-add').on('click', function () {
+        $(this).parents('.hidden-form').hide();
+        activeButton = false;
+    });
+
+    $('#button-reorder-content').on('click', function () {
+        $('.reorderable').addClass('draggable').attr('draggable', true);
+        $('.grip, #button-save-order').show();
+
+        addDragListeners();
+    });
+
+    $('#button-save-order').on('click', function () {
+        $('.stage').each(function (index) {
+            const id = $(this).children('p').attr('data-id');
+            const json = { "order": index + 1 };
+
+            $.ajax({
+                type: 'PUT',
+                url: `http://localhost:5000/api/v1/stages/${id}`,
+                contentType: 'application/json',
+                data: JSON.stringify(json),
+            }).done(function (data) {
+                $('.reorderable').removeClass('draggable').attr('draggable', false);
+                $('.grip, #button-save-order').hide();
+                $('.button').css('opacity', 1).attr('disabled', false);
+                activeButton = false;
+            });
+        });
+
+    });
+</script>
+
+
+
+<style>
+    #stage-order {
+        display: none;
+    }
+
+    .step-form {
+        display: none
+    }
+
+    .hidden-form {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .input-title {
+        font-size: 2em;
+    }
+
+    .bottom-fixed {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+    }
+
+    .grip {
+        padding-right: 15px;
+        display: none;
+    }
+
+    #button-save-order {
+        display: none;
+    }
+</style>
+
+{% endblock %}

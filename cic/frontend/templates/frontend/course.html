@@ -1,0 +1,37 @@
+{% extends 'frontend/layout.html' %}
+
+{% block content %}
+
+<body>
+
+    <section class="banner" id="course-{{ course.title }}">
+        <div class="container">
+            <div class="module w100 text-center mbm">
+                <h2>{{ course.title }}</h2>
+            </div>
+
+            {% for unit in units %}
+            <div class="module w100 pm mbm card">
+                <a href="{{ url_for('frontend.view_unit', course_id=course.id, stage_id=unit.id) }}">
+                    <h4 class="xl mbs">{{ unit.title }}</h4>
+                </a>
+                <p>{{ unit.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="banner" id="banner-next">
+        <div class="container lesson">
+
+        </div>
+    </section>
+
+    <div class="button glossary-add">
+        <i class="fas fa-plus"></i> Add to Glossary
+    </div>
+
+
+</body>
+
+{% endblock %}

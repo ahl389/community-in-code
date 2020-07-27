@@ -1,0 +1,40 @@
+{% extends 'frontend/layout.html' %}
+
+{% block content %}
+
+<section class="banner">
+    <div class="container">
+        <div class="module w40">
+            <div class="mbm error">
+
+                {{ err }}
+
+            </div>
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.name.label }}<br>
+                    {{ form.name() }}
+                </p>
+                <p>
+                    {{ form.email.label }}<br>
+                    {{ form.email() }}
+                </p>
+                <p>
+                    {{ form.password.label }}<br>
+                    {{ form.password() }}
+                </p>
+                <p>
+                    {{ form.confirm.label }}<br>
+                    {{ form.confirm() }}
+                </p>
+                <div class="button submit hvr-icon-forward hvr-sweep-to-right mtm">{{ form.submit(class="large bold") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock %}

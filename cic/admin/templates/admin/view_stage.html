@@ -1,0 +1,211 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module w65 prl">
+            <div class="container">
+                <div class="module w100 pbm mbm overview">
+                    <h2>{{stage.title}}</h2>
+                    <p>{{stage.description}}</p>
+                </div>
+
+                <div class="module w95">
+                    <div class="container">
+                        <div class="module w100 mbm">
+                            <h3>Content</h3>
+                            <p class="italic">Click on any the title of any step to edit it.</p>
+                        </div>
+
+                        {% for step in steps %}
+                        <div class="module w100 mbs stage reorderable ps">
+                            <a href="{{ url_for('admin.view_step', step_id = step.id) }}">
+                                <p data-id={{step.id}} data-order="{{step.order}}" class="bold large">
+                                    <i class="fas fa-grip-horizontal grip"></i> {{step.title}}
+                                </p>
+                            </a>
+                            <p>{{ step.description }}</p>
+                        </div>
+                        {% endfor %}
+
+                        <div class="module w30 button text-center light self-align-right" id="button-save-order">
+                            Save Order
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="module w35 pll">
+            <div class="container">
+                <div class="module large w100 button light mbs text-center" id="button-edit-course">
+                    <a href="{{ url_for('admin.view_course', course_id=stage.parent_course) }}" id="a-edit-course">
+                        Back to course
+                    </a>
+                </div>
+
+                <div class="module large w100 button light mbs text-center" id="button-edit-course">
+                    <a href="{{ url_for('admin.edit_stage', stage_id=stage.id) }}" id="a-edit-course">
+                        Edit Stage Details
+                    </a>
+                </div>
+
+                <div class="module large w100 button light mbs text-center" id="button-reorder-content">
+                    Reorder Steps
+                </div>
+
+                <div class="module large w100 button light mbm text-center" id="button-add-step">
+                    Add Step
+                </div>
+
+                <div class="module w100 pbm mbm step-form hidden-form">
+                    <h3 class="mbm">New Step</h3>
+                    <form action="" method="post" novalidate>
+                        {{ step_form.hidden_tag() }}
+
+                        <div class="module mbs">
+                            {{ step_form.title.label }}<br>
+                            {{ step_form.title() }}
+                        </div>
+
+                        <div class="module mbs">
+                            {{ step_form.description.label }}<br>
+                            {{ step_form.description }}
+                        </div>
+
+                        <div class="module mbs">
+                            {{ step_form.step_type.label }}<br>
+                            {{ step_form.step_type(class="select") }}
+                        </div>
+
+                        <div class="module mbs">
+                            <label>Stage</label><br>
+                            <select class="select">
+                                {% for stage in stages %}
+                                <option value={{stage.id}}>{{stage.title}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="module mbs">
+                            {{ step_form.content.label }}<br>
+                            {{ step_form.content(rows=20) }}
+                        </div>
+
+                        {{ step_form.submit(class="button light") }}
+
+                        <div class="button button-cancel-add">
+                            Cancel
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+</section>
+
+<script>
+    let activeButton = false;
+
+    $('.button').on('click', function () {
+        if (!activeButton) {
+            $('.button').css('opacity', 1);
+            $(this).siblings('.button').css('opacity', .4);
+            activeButton = true;
+        }
+    });
+
+    $('#a-edit-course').on('click', function (e) {
+        if (activeButton) {
+            e.preventDefault();
+        }
+    });
+
+    $('#button-add-stage').on('click', function () {
+        //if (activeButton === false) {
+        $('.stage-form').show();
+        //}
+    });
+
+    $('#button-add-step').on('click', function () {
+        //if (activeButton === false) {
+        $('.step-form').show();
+        //}
+    });
+
+    $('.button-cancel-add').on('click', function () {
+        $(this).parents('.hidden-form').hide();
+        activeButton = false;
+    });
+
+    $('#button-reorder-content').on('click', function () {
+        $('.reorderable').addClass('draggable').attr('draggable', true);
+        $('.grip, #button-save-order').show();
+
+        addDragListeners();
+    });
+
+    $('#button-save-order').on('click', function () {
+        $('.stage').each(function (index) {
+            const id = $(this).children('p').attr('data-id');
+            const json = { "order": index + 1 };
+
+            $.ajax({
+                type: 'PUT',
+                url: `http://localhost:5000/api/v1/stages/${id}`,
+                contentType: 'application/json',
+                data: JSON.stringify(json),
+            }).done(function (data) {
+                $('.reorderable').removeClass('draggable').attr('draggable', false);
+                $('.grip, #button-save-order').hide();
+                $('.button').css('opacity', 1).attr('disabled', false);
+                activeButton = false;
+            });
+        });
+
+    });
+</script>
+
+
+
+<style>
+    #stage-order {
+        display: none;
+    }
+
+    .step-form {
+        display: none
+    }
+
+    .hidden-form {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .input-title {
+        font-size: 2em;
+    }
+
+    .bottom-fixed {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+    }
+
+    .grip {
+        padding-right: 15px;
+        display: none;
+    }
+
+    #button-save-order {
+        display: none;
+    }
+</style>
+
+{% endblock %}

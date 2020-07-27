@@ -1,0 +1,188 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module w65 prl">
+            <div class="container">
+                <div class="module w100 pbm mbm overview">
+                    <h2>{{course.title}}</h2>
+                    <p>{{course.description}}</p>
+                </div>
+
+                <div class="module w95">
+                    <div class="container">
+                        <div class="module w100 mbm">
+                            <h3>{{ course.course_type.capitalize() }} Sections</h3>
+                            <p class="italic">Click on any section to edit it, or the steps within it.</p>
+                        </div>
+
+                        {% for stage in stages %}
+                        <div class="module w100 mbs stage reorderable ps">
+                            <a href="{{ url_for('admin.view_stage', stage_id = stage.id) }}">
+                                <p data-id={{stage.id}} data-order="{{stage.order}}" class="bold large"><i
+                                        class="fas fa-grip-horizontal grip"></i> {{stage.title}}</p>
+                            </a>
+                            <p>{{ stage.description }}</p>
+                        </div>
+                        {% endfor %}
+
+                        <div class="module w30 button text-center light self-align-right" id="button-save-order">
+                            Save Order
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="module w35 pll">
+            <div class="container">
+                <div class="module large w100 button light mbs text-center" id="button-edit-course">
+                    <a href="{{ url_for('admin.edit_course', course_id=course.id) }}" id="a-edit-course">
+                        Edit {{ course.course_type.capitalize() }} Details
+                    </a>
+                </div>
+
+                <div class="module large w100 button light mbs text-center" id="button-reorder-content">
+                    Reorder Content
+                </div>
+
+                <div class="module large w100 button light mbs text-center" id="button-add-stage">
+                    Add Section
+                </div>
+
+                <div class="module w100 pbm mbm stage-form hidden-form">
+                    <h3 class="mbm">New Stage</h3>
+
+                    <form action="" method="post" novalidate>
+                        {{ stage_form.hidden_tag() }}
+
+                        <input type="hidden" name="course_id" value={{course.id}}>
+
+                        <div class="module mbs">
+                            {{ stage_form.title.label }}<br>
+                            {{ stage_form.title() }}
+                        </div>
+
+                        <div class="module mbs">
+                            {{ stage_form.description.label }}<br>
+                            {{ stage_form.description }}
+                        </div>
+
+                        {{ stage_form.submit(class="button light") }}
+
+                        <button class="button button-cancel-add">
+                            Cancel
+                        </button>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+</section>
+
+<script>
+    let activeButton = false;
+
+    $('.button').on('click', function () {
+        if (!activeButton) {
+            $('.button').css('opacity', 1);
+            $(this).siblings('.button').css('opacity', .4);
+            activeButton = true;
+        }
+    });
+
+    $('#a-edit-course').on('click', function (e) {
+        if (activeButton) {
+            e.preventDefault();
+        }
+    });
+
+    $('#button-add-stage').on('click', function () {
+        // if (!activeButton) {
+        $('.stage-form').show();
+        //}
+    });
+
+    $('#button-add-step').on('click', function () {
+        if (!activeButton) {
+            $('.step-form').show();
+        }
+    });
+
+    $('.button-cancel-add').on('click', function () {
+        $(this).parents('.hidden-form').hide();
+        activeButton = false;
+    });
+
+    $('#button-reorder-content').on('click', function () {
+        $('.reorderable').addClass('draggable').attr('draggable', true);
+        $('.grip, #button-save-order').show();
+
+        addDragListeners();
+    });
+
+    $('#button-save-order').on('click', function () {
+        $('.stage').each(function (index) {
+            const id = $(this).children('p').attr('data-id');
+            const json = { "order": index + 1 };
+
+            $.ajax({
+                type: 'PUT',
+                url: `http://localhost:5000/api/v1/stages/${id}`,
+                contentType: 'application/json',
+                data: JSON.stringify(json),
+            }).done(function (data) {
+                $('.reorderable').removeClass('draggable').attr('draggable', false);
+                $('.grip, #button-save-order').hide();
+                $('.button').css('opacity', 1).attr('disabled', false);
+                activeButton = false;
+            });
+        });
+
+    });
+</script>
+
+
+
+<style>
+    #stage-order {
+        display: none;
+    }
+
+    .step-form {
+        display: none
+    }
+
+    .hidden-form {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .input-title {
+        font-size: 2em;
+    }
+
+    .bottom-fixed {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+    }
+
+    .grip {
+        padding-right: 15px;
+        display: none;
+    }
+
+    #button-save-order {
+        display: none;
+    }
+</style>
+
+{% endblock %}

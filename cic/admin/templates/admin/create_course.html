@@ -1,0 +1,33 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module w40">
+            <h2 class="mbm">Create New Course</h2>
+            <form action="" method="post" novalidate>
+                {{ course_form.hidden_tag() }}
+                <div class="module w100 mbs">
+                    {{ course_form.title.label }}<br>
+                    {{ course_form.title() }}
+                </div>
+                <div class="module w100 mbs">
+                    {{ course_form.course_type.label }}<br>
+                    {{ course_form.course_type(class="select") }}
+                </div>
+                <div class="module w100 mbm">
+                    {{ course_form.description.label }}<br>
+                    {{ course_form.description() }}
+                </div>
+
+                <div class="module w100">
+                    {{ course_form.submit(class="button light") }}
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

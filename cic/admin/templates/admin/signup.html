@@ -1,0 +1,22 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email() }}
+    </p>
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password() }}
+    </p>
+    <p>
+        {{ form.confirm.label }}<br>
+        {{ form.confirm() }}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+
+{% endblock %}

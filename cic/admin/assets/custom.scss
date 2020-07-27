@@ -1,0 +1,90 @@
+#banner-horizontal-navigation {
+    padding: $small $medium;
+    position: sticky;
+    top: 0px;
+    background-color: white;
+    box-shadow: 0px 0px 5px #bbb;
+    z-index: 100;
+}
+
+#logo {
+    max-width: 200px;
+}
+
+.task:hover {
+    background-color: #fff;
+    color: $accent-color2;
+    @include card-highlight-style;
+}
+
+//View/Edit Pages
+.overview {
+    border-bottom: $border;
+}
+
+.hidden-form {
+    display: none;
+}
+
+.draggable {
+    border: $border;
+    border-radius: $border-radius;
+    padding: $small;
+    cursor: pointer;
+}
+
+.draggable.over {
+    border: $border-over;
+}
+
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+
+.stage:hover {
+    @include card-highlight-style;
+}
+
+.card {
+    @include card-highlight-style;
+}
+
+.card:hover {
+    box-shadow: 0px 3px 10px -2px #bbb;
+}
+
+.card-title {
+    background-color: $accent-color2;
+    color: white;
+    border-radius: $border-radius $border-radius 0px 0px;
+    font-family: $heading-font;
+}
+
+.card-title.topic-citrine {
+    background-color: $secondary-color;
+}
+
+.card-title.topic-ml {
+    background-color: $accent-color4;
+}
+
+.card-title.topic-programming {
+    background-color: $accent-color3;
+}
+
+@media (max-width: 768px) {
+	.card-title, #cardTitle {
+        padding: $small;
+        margin-bottom: 0;
+        
+        .module {
+            margin-bottom: 0;
+        }
+    }
+}

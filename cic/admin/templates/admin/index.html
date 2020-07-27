@@ -1,0 +1,26 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module ps w100">
+            <h2 class="mbm">Hello, {{ current_user.name }}!</h2>
+        </div>
+
+        <div class="module w40">
+            <div class="container">
+                <div class="module xl ps w100 mbm task">
+                    <a href="{{url_for('admin.create_course')}}">Create New Course</a>
+                </div>
+
+                <div class="module xl ps w100 mbm task">
+                    <a href="{{url_for('admin.find')}}">Find, View, and Edit Content</a>
+                    <p>Edit or add to an existing course, tutorial, or reference guide. Add to an existing documentation
+                        set or edit documentation.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

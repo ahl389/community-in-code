@@ -1,0 +1,30 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module ps w100">
+            <h2 class="mbm">Find and Edit Content</h2>
+        </div>
+
+        <div class="module w100">
+            <div class="container">
+                {% for course in courses %}
+                <div class="module w33 card mls mrs">
+                    <div class="container">
+                        <div class="module w100 pls ptxs pbxs prs card-title">
+                            <a href="{{ url_for('admin.view_course', course_id=course.id) }}">{{ course.title }}</a>
+                        </div>
+
+                        <div class="module w100 ps card-content">
+                            {{ course.description }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
