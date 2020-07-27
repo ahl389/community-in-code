@@ -8,6 +8,8 @@ from flask_login import LoginManager
 from flask_scss import Scss
 from flaskext.markdown import Markdown
 from markdown.extensions.fenced_code import FencedCodeExtension
+from markdown.extensions.tables import TableExtension
+from markdown.extensions.codehilite import CodeHiliteExtension
 from flask_pagedown import PageDown
 
 
@@ -25,7 +27,7 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     Scss(app)
-    Markdown(app, extensions=['fenced_code'])
+    Markdown(app, extensions=['fenced_code', 'tables', 'codehilite'])
     pagedown = PageDown(app)
 
     migrate = Migrate(app, db, compare_type=True)

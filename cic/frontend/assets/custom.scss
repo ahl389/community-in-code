@@ -113,10 +113,39 @@ blockquote {
 
     h3 {
       font-size: $large-font;
+      margin-bottom: 15px;
+      margin-bottom: 15px;
     }
+
+    h4 {
+      margin-bottom: 15px;
+      margin-bottom: 15px;
+    }
+    
 
     li {
       margin-bottom: 0px;
+    }
+
+    table {
+      border: 1px solid #ddd;
+      border-collapse: collapse;
+      text-align: left;
+      width: 100%;
+      margin-top: 25px;
+      margin-bottom: 25px;
+
+      tr {
+        border-top: 1px solid #ddd;
+      }
+
+      th, td {
+        padding: $mini;
+      }
+
+      th:not(:last-child), td:not(:last-child) {
+        border-right: 1px solid #ddd;
+      }
     }
   }
 
@@ -127,7 +156,6 @@ pre {
   overflow-x: scroll;
   border-radius: 5px;
   padding: 15px;
-  background-color: #555;
 
   code {
     background-color: inherit;
