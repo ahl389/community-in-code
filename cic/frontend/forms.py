@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from flask_pagedown.fields import PageDownField
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField, HiddenField
+from wtforms import StringField, IntegerField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.widgets import HiddenInput
 from markupsafe import Markup, escape
 
 
@@ -51,7 +52,7 @@ class CourseForm(FlaskForm):
 class StageForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description')
-    order = HiddenField('Order')
+    order = IntegerField(widget=HiddenInput(), default=0)
     steps = HiddenField('Steps')
     submit = SubmitField('Save')
 

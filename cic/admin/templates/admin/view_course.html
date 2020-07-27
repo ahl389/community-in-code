@@ -17,6 +17,7 @@
                             <p class="italic">Click on any section to edit it, or the steps within it.</p>
                         </div>
 
+
                         {% for stage in stages %}
                         <div class="module w100 mbs stage reorderable ps">
                             <a href="{{ url_for('admin.view_stage', stage_id = stage.id) }}">
@@ -57,9 +58,9 @@
                     <h3 class="mbm">New Stage</h3>
 
                     <form action="" method="post" novalidate>
+
                         {{ stage_form.hidden_tag() }}
 
-                        <input type="hidden" name="course_id" value={{course.id}}>
 
                         <div class="module mbs">
                             {{ stage_form.title.label }}<br>

@@ -258,7 +258,7 @@ class Stage(BaseMixin, db.Model):
         db.Integer(),
         index=False,
         unique=False,
-        nullable=False)
+        nullable=True)
 
     steps = db.Column(
         db.Text(),
@@ -328,7 +328,7 @@ class Step(BaseMixin, db.Model):
         db.Integer(),
         index=False,
         unique=False,
-        nullable=False)
+        nullable=True)
 
     notes = db.Column(
         db.Text(),
