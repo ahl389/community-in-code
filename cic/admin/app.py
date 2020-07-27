@@ -120,23 +120,27 @@ def view_course(course_id):
         stage = Stage()
         stage_form.populate_obj(stage)
         stage.parent_course = course_id
+        stage.order = 0
         stage_id = stage.save_get_id()
 
         # get course, update stage value of course, save it
         course = Course.get(course_id)
-        course.stages += f'{stage_id},'
+
+        if not course.stages:
+            course.stages = str(stage_id)
+        else: 
+            stages = course.stages.split(',')
+            stages.append(str(stage_id))
+            stages = ','.join(stages)
+            course.stages = stages
         course.save()
 
         # redirect to same view course page
         return redirect(url_for('admin.view_course', course_id=course_id))
 
     course = Course.get(course_id)
-
-    if course.stages:
-        stages = Stage.get_many(course.stages.split(','))
-        stages.sort(key=lambda x: x.order)
-    else:
-        stages=[]
+    stages = Stage.get_many(course.stages.split(','))
+    stages.sort(key=lambda x: x.order)
 
     return render_template('admin/view_course.html', course=course, stages=stages, stage_form=stage_form)
 
@@ -153,19 +157,26 @@ def view_stage(stage_id):
         step_form.populate_obj(step)
         step.parent_stage = stage_id
         step.parent_course = stage.parent_course
+        step.order = 0
         step_id = step.save_get_id()
 
         # update step value of stage
-        stage.steps += f'{step_id},'
-
-        # save stage and step
+        if not stage.steps:
+            stage.steps = str(step_id)
+        else: 
+            steps = stage.steps.split(',')
+            steps.append(str(step_id))
+            steps = ','.join(steps)
+            stage.steps = steps
         stage.save()
+
 
         # redirect to same view course page
         return redirect(url_for('admin.view_stage', stage_id=stage_id))
 
+
     stage = Stage.get(stage_id)
-    steps = Step.get_many(stage.steps)
+    steps = Step.get_many(stage.steps.split(','))
     steps.sort(key=lambda x: x.order)
 
     return render_template('admin/view_stage.html', step_form=step_form, stage=stage, steps=steps)

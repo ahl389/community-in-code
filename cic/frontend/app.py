@@ -96,14 +96,14 @@ def find():
 @login_required
 def view_course(course_id):
     course = Course.get(course_id)
-    units = Stage.get_many(course.stages)
+    units = Stage.get_many(course.stages.split(','))
     return render_template('frontend/course.html', course=course, units=units)
 
 @frontend.route('/courses/<course_id>/<stage_id>')
 def view_unit(course_id, stage_id):
     course = Course.get(course_id)
     unit = Stage.get(stage_id)
-    steps = Step.get_many(unit.steps)
+    steps = Step.get_many(unit.steps.split(','))
     return render_template('frontend/unit.html', course=course, unit=unit, steps=steps)
 
 @frontend.route('/courses/<course_id>/<stage_id>/<step_id>')

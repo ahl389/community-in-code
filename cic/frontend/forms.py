@@ -52,15 +52,12 @@ class CourseForm(FlaskForm):
 class StageForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description')
-    order = IntegerField(widget=HiddenInput(), default=0)
     steps = HiddenField('Steps')
     submit = SubmitField('Save')
 
 
 class StepForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    description = TextAreaField('Description')
-    order = HiddenField('Order')
     step_type = SelectField(u'Step Type', choices=[
                             ('video', 'Video'), ('text', 'Text')])
     content = PageDownField('Content')
