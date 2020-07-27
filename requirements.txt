@@ -21,3 +21,4 @@ flask-wtf
 flask-scss
 requests
 Flask-Markdown==0.3
+Flask-pagedown
