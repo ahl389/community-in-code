@@ -131,7 +131,7 @@ def view_course(course_id):
         return redirect(url_for('admin.view_course', course_id=course_id))
 
     course = Course.get(course_id)
-    stages = Stage.get_many(course.stages.split(','))
+    stages = Stage.get_many(course.stages)
     stages.sort(key=lambda x: x.order)
 
     return render_template('admin/view_course.html', course=course, stages=stages, stage_form=stage_form)
