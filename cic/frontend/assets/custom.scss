@@ -1,7 +1,7 @@
 /* Enter your custom CSS below */
 
 #banner-horizontal-navigation {
-  padding: 25px;
+  padding: 15px 25px;
   box-shadow: $shadow;
 }
 
@@ -163,11 +163,13 @@ pre {
   }
 }
 
-code {
-  font-size: 18px;
-  background-color: #ddd;
-  padding: 4px 6px;
-  border-radius: 3px;
+p, li {
+  code {
+    font-size: 18px;
+    background-color: #ddd;
+    padding: 4px 6px;
+    border-radius: 3px;
+  }
 }
 
 input, .submit {

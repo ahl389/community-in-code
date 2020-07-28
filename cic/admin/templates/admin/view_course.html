@@ -132,7 +132,7 @@
 
     $('#button-save-order').on('click', function () {
         $('.stage').each(function (index) {
-            const id = $(this).children('p').attr('data-id');
+            const id = $(this).children('a').children('p').attr('data-id');
             const json = { "order": index + 1 };
 
             $.ajax({

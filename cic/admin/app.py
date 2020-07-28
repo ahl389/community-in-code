@@ -120,7 +120,13 @@ def view_course(course_id):
         stage = Stage()
         stage_form.populate_obj(stage)
         stage.parent_course = course_id
-        stage.order = 0
+
+        # set order of new stage and save
+        if course.stages:
+            stage.order = course.stages.length
+        else:
+            stage.order = 1
+
         stage_id = stage.save_get_id()
 
         # get course, update stage value of course, save it
@@ -133,6 +139,7 @@ def view_course(course_id):
             stages.append(str(stage_id))
             stages = ','.join(stages)
             course.stages = stages
+            
         course.save()
 
         # redirect to same view course page
@@ -157,7 +164,12 @@ def view_stage(stage_id):
         step_form.populate_obj(step)
         step.parent_stage = stage_id
         step.parent_course = stage.parent_course
-        step.order = 0
+        
+        if stage.steps:
+            order = stage.steps.length
+        else:
+            order = 0
+
         step_id = step.save_get_id()
 
         # update step value of stage

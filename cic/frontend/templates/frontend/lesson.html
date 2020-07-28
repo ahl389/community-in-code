@@ -33,16 +33,32 @@
             <div class="module w100 plxl prxl pbxl large">
                 {{ step.content | markdown }}
             </div>
+        </div>
 
+        <div class="container w80 pbl">
+            <div class="module mtm self-align-left">
+                {% if prev_step %}
+                <a class="bold"
+                    href="{{ url_for('frontend.view_step', course_id = course.id, stage_id = unit.id, step_id=prev_step) }}"><i
+                        class="fas fa-arrow-left"></i> Previous
+                    Lesson</a><br>
+                {% endif %}
 
+                <a class="bold" href="{{ url_for('frontend.view_unit', course_id = course.id, stage_id = unit.id) }}"><i
+                        class="fas fa-arrow-left"></i> Back to Unit</a>
+            </div>
+
+            <div class="module mtm self-align-right">
+                {% if next_step %}
+                <a class="bold"
+                    href="{{ url_for('frontend.view_step', course_id = course.id, stage_id = unit.id, step_id=next_step) }}">Next
+                    Lesson <i class="fas fa-arrow-right"></i></a>
+                {% endif %}
+            </div>
         </div>
     </section>
 
-    <section class="banner" id="banner-next">
-        <div class="container lesson">
 
-        </div>
-    </section>
 
     <div class="button glossary-add">
         <i class="fas fa-plus"></i> Add to Glossary

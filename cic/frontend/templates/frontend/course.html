@@ -13,7 +13,7 @@
             {% for unit in units %}
             <div class="module w100 pm mbm card">
                 <a href="{{ url_for('frontend.view_unit', course_id=course.id, stage_id=unit.id) }}">
-                    <h4 class="xl mbs">{{ unit.title }}</h4>
+                    <h4 class="xl mbs">Unit {{ unit.order }}: {{ unit.title }}</h4>
                 </a>
                 <p>{{ unit.description }}</p>
             </div>

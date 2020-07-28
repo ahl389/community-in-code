@@ -154,12 +154,14 @@
 
     $('#button-save-order').on('click', function () {
         $('.stage').each(function (index) {
-            const id = $(this).children('p').attr('data-id');
+            console.log(this)
+            const id = $(this).children('a').children('p').attr('data-id');
+            console.log(id)
             const json = { "order": index + 1 };
 
             $.ajax({
                 type: 'PUT',
-                url: `http://localhost:5000/api/v1/stages/${id}`,
+                url: `http://localhost:5000/api/v1/steps/${id}`,
                 contentType: 'application/json',
                 data: JSON.stringify(json),
             }).done(function (data) {

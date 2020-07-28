@@ -110,5 +110,18 @@ def view_unit(course_id, stage_id):
 def view_step(course_id, stage_id, step_id):
     course = Course.get(course_id)
     unit = Stage.get(stage_id)
+    steps = Step.get_many(unit.steps.split(','))
     step = Step.get(step_id)
-    return render_template('frontend/lesson.html', course=course, unit=unit, step=step)
+
+    next_step = None
+    prev_step = None
+
+    for s in steps:
+        if s.order == step.order + 1:
+            next_step = s.id
+        if s.order == step.order - 1:
+            prev_step = s.id
+
+    
+    return render_template('frontend/lesson.html', course=course, unit=unit, step=step, next_step=next_step, prev_step=prev_step)
+
