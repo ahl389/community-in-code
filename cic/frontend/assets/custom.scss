@@ -5,6 +5,10 @@
   box-shadow: $shadow;
 }
 
+.fas.desktop-hide {
+  display: none;
+}
+
 blockquote {
   border-left: 6px solid #ddd;
   padding-left: $small;
@@ -87,7 +91,6 @@ blockquote {
 
 .banner.banner-main {
   .container.main {
-    width: 80%;
     border-radius: 25px 25px 0px 0px;
     box-shadow: $shadow;
 
@@ -292,25 +295,37 @@ input[type=submit] {
   bottom: 25px;
   right: 25px;
 }
+@media (max-width: 1024px) {
+  .fas.desktop-hide {
+    display: inline-block;
+  }
+}
 
 @media (max-width: 768px) {
-  #banner-landing {
-      background:black;
-      
-      #module-signup {
-          position:static;
-          background-color: #000000;
-          padding: $small;
-      }
+  .hidden-menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: $accent-color;
+    width: 80%;
+    font-weight: bold;
+    color: white;
 
-      #module-info {
-          padding-top: $large;
-          background-color: white;
-          padding: $medium;
-      }
+    a {
+      color: white;
+    }
   }
 
-  #module-outline {
-      padding: $medium;
+
+  #banner-horizontal-navigation {
+    .module {
+      margin-bottom: 0;
+    }
+
+
+    .fa, .fas {
+      cursor: pointer;
+    }
   }
 }

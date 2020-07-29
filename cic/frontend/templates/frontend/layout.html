@@ -38,7 +38,7 @@
                 
             </div> -->
 
-            <div class="module self-align-right">
+            <div class="module self-align-right mob-hide">
 
                 {% if current_user.is_authenticated %}
                 <button class="button inverse large bold heading-font hvr-icon-forward hvr-sweep-to-right mrm">
@@ -52,10 +52,39 @@
                 {% endif %}
             </div>
 
+
+            <div class="module self-align-right desktop-hide">
+                <i class="fas fa-bars desktop-hide"></i>
+            </div>
+
+            <div class="module self-align-right hidden-menu desktop-hide mob-hide pm">
+                <div class="container">
+                    <i class="fas fa-times"></i>
+                    <div class="module w100 mtl large">
+                        {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('frontend.view_course', course_id=1) }}">Begin Course</a><br>
+                        <a href="{{ url_for('frontend.logout') }}">Logout</a>
+                        {% else %}
+                        <a class="prm" href="{{ url_for('frontend.login') }}">Login</a><br>
+                        <a href="{{ url_for('frontend.signup') }}">Create Account</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="kofi">
+                        <script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+                        <script
+                            type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'A0A01TNKN'); kofiwidget2.draw();</script>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
     </section>
 
-    <div class="kofi">
+    <div class="kofi mob-hide">
         <script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
         <script
             type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'A0A01TNKN'); kofiwidget2.draw();</script>
@@ -111,6 +140,14 @@
                 ).addClass('show')
             }
         });
+    });
+
+    $('.fa-bars').on('click', function () {
+        $('.hidden-menu').show();
+    });
+
+    $('.fa-times').on('click', function () {
+        $('.hidden-menu').hide();
     });
 </script>
 

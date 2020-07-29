@@ -5,7 +5,7 @@
 <body>
 
     <section class="banner banner-main" id="lesson-{{ step.title }}">
-        <div class="container main">
+        <div class="container align-center main w80 w90-mob">
             <div class="module w100 ptxl">
                 <h1 class="text-center mbm x2">{{ step.title }}</h1>
             </div>
@@ -30,12 +30,12 @@
                 </div>
             </div>
 
-            <div class="module w100 plxl prxl pbxl large">
+            <div class="module w80 w90-mob pbxl large">
                 {{ step.content | markdown }}
             </div>
         </div>
 
-        <div class="container w80 pbl">
+        <div class="container w80 w90-mob pbl">
             <div class="module mtm self-align-left">
                 {% if prev_step %}
                 <a class="bold"

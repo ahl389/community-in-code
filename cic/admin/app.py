@@ -114,6 +114,7 @@ def find():
 @admin.route('/view/course/<course_id>', methods=['GET', 'POST'])
 def view_course(course_id):
     stage_form = StageForm()
+    course = Course.get(course_id)
 
     if stage_form.validate_on_submit():
         # create stage from form data
@@ -145,9 +146,11 @@ def view_course(course_id):
         # redirect to same view course page
         return redirect(url_for('admin.view_course', course_id=course_id))
 
-    course = Course.get(course_id)
-    stages = Stage.get_many(course.stages.split(','))
-    stages.sort(key=lambda x: x.order)
+    if course.stages:
+        stages = Stage.get_many(course.stages.split(','))
+        stages.sort(key=lambda x: x.order)
+    else:
+        stages = []
 
     return render_template('admin/view_course.html', course=course, stages=stages, stage_form=stage_form)
 
@@ -186,8 +189,11 @@ def view_stage(stage_id):
         # redirect to same view course page
         return redirect(url_for('admin.view_stage', stage_id=stage_id))
 
-    steps = Step.get_many(steps)
-    steps.sort(key=lambda x: x.order)
+    if stage.steps:
+        steps = Step.get_many(steps)
+        steps.sort(key=lambda x: x.order)
+    else:
+        steps = []
 
     return render_template('admin/view_stage.html', step_form=step_form, stage=stage, steps=steps)
 

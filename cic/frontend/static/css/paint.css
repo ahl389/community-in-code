@@ -25,6 +25,9 @@ li {
   padding: 15px 25px;
   box-shadow: 0px 0px 25px 3px #eee; }
 
+.fas.desktop-hide {
+  display: none; }
+
 blockquote {
   border-left: 6px solid #ddd;
   padding-left: 15px; }
@@ -84,7 +87,6 @@ blockquote {
   box-shadow: 0px 0px 25px 3px #eee; }
 
 .banner.banner-main .container.main {
-  width: 80%;
   border-radius: 25px 25px 0px 0px;
   box-shadow: 0px 0px 25px 3px #eee; }
   .banner.banner-main .container.main i.fas {
@@ -240,19 +242,26 @@ input[type=submit] {
   bottom: 25px;
   right: 25px; }
 
+@media (max-width: 1024px) {
+  .fas.desktop-hide {
+    display: inline-block; } }
+
 @media (max-width: 768px) {
-  #banner-landing {
-    background: black; }
-    #banner-landing #module-signup {
-      position: static;
-      background-color: #000000;
-      padding: 15px; }
-    #banner-landing #module-info {
-      padding-top: 50px;
-      background-color: white;
-      padding: 30px; }
-  #module-outline {
-    padding: 30px; } }
+  .hidden-menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #2a1758;
+    width: 80%;
+    font-weight: bold;
+    color: white; }
+    .hidden-menu a {
+      color: white; }
+  #banner-horizontal-navigation .module {
+    margin-bottom: 0; }
+  #banner-horizontal-navigation .fa, #banner-horizontal-navigation .fas {
+    cursor: pointer; } }
 
 .codehilite .hll {
   background-color: #49483e; }
@@ -620,6 +629,9 @@ button,
 
 .inverse {
   color: #ffffff; }
+
+.desktop-hide {
+  display: none; }
 
 /* FONTS */
 .mini {
@@ -1147,6 +1159,8 @@ button,
 /*************** MOBILE STYLE **************/
 /***************************************************************************/
 @media (max-width: 1024px) {
+  .desktop-hide {
+    display: flex; }
   .per10.no-collapse,
   .per20.no-collapse,
   .per25.no-collapse,
@@ -1247,6 +1261,8 @@ button,
     order: 10; } }
 
 @media (max-width: 768px) {
+  .mob-hide {
+    display: none; }
   .banner {
     padding: 50px 0px; }
   .container {
@@ -1400,6 +1416,10 @@ button,
   .mob-per90,
   .p90-mob,
   .w90-mob {
+    width: 90%; }
+  .mob-per95,
+  .p95-mob,
+  .w95-mob {
     width: 90%; }
   .mob-per100,
   .p100-mob,

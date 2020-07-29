@@ -99,6 +99,10 @@ button,
 	color: $inverse;
 }
 
+.desktop-hide {
+	display: none
+}
+
 /* FONTS */
 .mini {
 	font-size: $mini-font;
@@ -722,6 +726,11 @@ $i: 5;
 }
 
 @media (max-width: 1024px) {
+
+	.desktop-hide {
+		display: flex;
+	}
+
 	.per10.no-collapse,
 	.per20.no-collapse,
 	.per25.no-collapse, 
@@ -874,6 +883,10 @@ $i: 5;
 	
 	
 @media (max-width: 768px) {
+	.mob-hide {
+		display: none;
+	}
+	
 	.banner {
 		padding: $large 0px;
 	}
@@ -1065,12 +1078,17 @@ $i: 5;
 		width: 90%;
 	}
 
+	.mob-per95,
+	.p95-mob,
+	.w95-mob {
+		width: 90%;
+	}
+
 	.mob-per100,
 	.p100-mob,
 	.w100-mob {
 		width: 100%;
 	}
-	
 	
 	.mob-order-1 {
 		order: 1;
