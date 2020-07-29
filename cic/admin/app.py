@@ -123,7 +123,7 @@ def view_course(course_id):
 
         # set order of new stage and save
         if course.stages:
-            stage.order = course.stages.length
+            stage.order = len(course.stages.split(',')) + 1
         else:
             stage.order = 1
 
@@ -157,6 +157,7 @@ def view_stage(stage_id):
     #stage_form = StageForm()
     step_form = StepForm()
     stage = Stage.get(stage_id)
+    steps = stage.steps.split(',')
 
     if step_form.validate_on_submit():
         # create step from form data
@@ -166,9 +167,9 @@ def view_stage(stage_id):
         step.parent_course = stage.parent_course
         
         if stage.steps:
-            order = stage.steps.length
+            step.order = len(steps) + 1
         else:
-            order = 0
+            step.order = 1
 
         step_id = step.save_get_id()
 
@@ -176,7 +177,6 @@ def view_stage(stage_id):
         if not stage.steps:
             stage.steps = str(step_id)
         else: 
-            steps = stage.steps.split(',')
             steps.append(str(step_id))
             steps = ','.join(steps)
             stage.steps = steps
@@ -186,9 +186,7 @@ def view_stage(stage_id):
         # redirect to same view course page
         return redirect(url_for('admin.view_stage', stage_id=stage_id))
 
-
-    stage = Stage.get(stage_id)
-    steps = Step.get_many(stage.steps.split(','))
+    steps = Step.get_many(steps)
     steps.sort(key=lambda x: x.order)
 
     return render_template('admin/view_stage.html', step_form=step_form, stage=stage, steps=steps)
