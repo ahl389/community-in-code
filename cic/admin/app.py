@@ -236,7 +236,12 @@ def edit_step(step_id):
     step = Step.get(step_id)
     current_stage_id = step.parent_stage
     course = Course.get(step.parent_course)
-    stages = Stage.get_many(course.stages)
+
+    if course.stages:
+        stages = Stage.get_many(course.stages.split(','))
+        stages.sort(key=lambda x: x.order)
+    else:
+        stages = []
 
     step_form = StepForm(obj=step)
 
