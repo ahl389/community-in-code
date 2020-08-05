@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from .forms import LoginForm, SignUpForm
-from ..models import db, User, Course, Stage, Step
+from ..models import db, User, Course, Stage, Step, Enrollment, Achievement
 from .. import login_manager
 import requests
 
@@ -91,6 +91,17 @@ def signup():
 def logout():
     logout_user()
     return redirect(url_for('frontend.index'))
+
+@frontend.route('/profile')
+@login_required
+def profile():
+    return 'hello'
+    # if current_user.is_authenticated:
+    #     return render_template('frontend/profile.html', user=current_user)
+    # else:
+
+    #     return redirect(url_for('frontend.login'), err=err)
+
 
 @frontend.route('/find')
 def find():
