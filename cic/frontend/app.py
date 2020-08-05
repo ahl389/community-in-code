@@ -70,11 +70,16 @@ def signup():
             if email in ['ashleyboucher@hey.com', 'ashleyhlivingston@gmail.com', 'ashleyhboucher@gmail.com']:
                 admin = True
 
-            user = User(email=form.email.data, name=form.name.data, admin=admin)
+            user = User(email=form.email.data, name=form.name.data, admin=admin, progress=progress)
             user.set_password(form.password.data)
+            user_id = user.save_get_id()
 
-            db.session.add(user)
-            db.session.commit()
+            # db.session.add(user)
+            # db.session.commit()
+
+
+            enrollment = Enrollment(user_id=user_id, course_id=1, unit=0)
+            enrollment.save()
 
             login_user(user)
             return redirect(url_for('frontend.index'))

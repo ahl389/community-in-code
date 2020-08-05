@@ -1,7 +1,7 @@
 from . import db, login_manager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from sqlalchemy.dialects.postgresql import JSON
 
 class BaseMixin(object):
     @classmethod
@@ -74,12 +74,8 @@ class User(UserMixin, BaseMixin, db.Model):
         unique=True,
         nullable=False)
 
-    current_course = db.Column(
-        db.Integer
-    )
-
     progress = db.Column(
-        db.String
+        JSON
     )
 
     admin = db.Column(
@@ -94,6 +90,52 @@ class User(UserMixin, BaseMixin, db.Model):
 
     def __repr__(self):
         return f'<User {self.email}, {self.id}'
+
+class Enrollment(BaseMixin, db.Model):
+    """
+    Model for user enrollments
+    """
+
+    __tablename__ = 'enrollments'
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True)
+
+    user_id = db.Column(
+        db.Integer()
+    )
+
+    course_id = db.Column(
+        db.Integer()
+    )
+
+    unit_id = db.Column(
+        db.Integer()
+    )
+
+class Achievement(BaseMixin, db.Model):
+    """
+    Model for user enrollments
+    """
+
+    __tablename__ = 'achievements'
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True)
+
+    user_id = db.Column(
+        db.Integer()
+    )
+
+    lesson_id = db.Column(
+        db.Integer()
+    )
+
+    level = db.Column(
+        db.Integer()
+    )
 
 
 class Track(db.Model):
