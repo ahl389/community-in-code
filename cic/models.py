@@ -26,6 +26,11 @@ class BaseMixin(object):
         objs = cls.query.filter(cls.id.in_(ids)).all()
         return objs
 
+    @classmethod
+    def get_by(cls, **kw):
+        objs = cls.query.filter_by(**kw).all()
+        return objs
+
     def save(self):
         if self.id == None:
             db.session.add(self)

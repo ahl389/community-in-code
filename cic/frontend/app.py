@@ -78,7 +78,7 @@ def signup():
             # db.session.commit()
 
 
-            enrollment = Enrollment(user_id=user_id, course_id=1, unit=0)
+            enrollment = Enrollment(user_id=user_id, course_id=1, unit_id=0)
             enrollment.save()
 
             login_user(user)
@@ -95,12 +95,10 @@ def logout():
 @frontend.route('/profile')
 @login_required
 def profile():
-    return 'hello'
-    # if current_user.is_authenticated:
-    #     return render_template('frontend/profile.html', user=current_user)
-    # else:
-
-    #     return redirect(url_for('frontend.login'), err=err)
+    enrollments = Enrollment.get_by(user_id=current_user.id)
+    course_ids = [ e.course_id for e in enrollments ] 
+    courses = Course.get_many(course_ids)
+    return render_template('frontend/profile.html', courses=courses)
 
 
 @frontend.route('/find')

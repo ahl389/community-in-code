@@ -1,0 +1,16 @@
+{% extends 'frontend/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module w60">
+            {{ current_user.name }}
+            {{ current_user.email }}
+
+            {% for course in courses: %}
+            {{ course.title }}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
