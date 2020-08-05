@@ -70,7 +70,7 @@ def signup():
             if email in ['ashleyboucher@hey.com', 'ashleyhlivingston@gmail.com', 'ashleyhboucher@gmail.com']:
                 admin = True
 
-            user = User(email=form.email.data, name=form.name.data, admin=admin, progress=progress)
+            user = User(email=form.email.data, name=form.name.data, admin=admin)
             user.set_password(form.password.data)
             user_id = user.save_get_id()
 

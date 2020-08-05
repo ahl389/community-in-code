@@ -59,10 +59,8 @@ class User(UserMixin, BaseMixin, db.Model):
         primary_key=True)
 
     name = db.Column(
-        db.String(255),
-        index=False,
-        unique=True,
-        nullable=True)
+        db.String(255)
+    )
 
     password = db.Column(
         db.String(128)
@@ -73,10 +71,6 @@ class User(UserMixin, BaseMixin, db.Model):
         index=False,
         unique=True,
         nullable=False)
-
-    progress = db.Column(
-        JSON
-    )
 
     admin = db.Column(
         db.Boolean
