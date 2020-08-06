@@ -26,6 +26,11 @@ class BaseMixin(object):
         objs = cls.query.filter(cls.id.in_(ids)).all()
         return objs
 
+    @classmethod
+    def get_by(cls, **kw):
+        objs = cls.query.filter_by(**kw).all()
+        return objs
+
     def save(self):
         if self.id == None:
             db.session.add(self)
@@ -107,6 +112,7 @@ class Enrollment(BaseMixin, db.Model):
     unit_id = db.Column(
         db.Integer()
     )
+
 
 class Achievement(BaseMixin, db.Model):
     """
@@ -336,6 +342,10 @@ class Step(BaseMixin, db.Model):
         unique=False,
         nullable=True)
 
+    base_lesson = db.Column(
+        db.Integer()
+    )
+
     title = db.Column(
         db.String(255),
         index=False,
@@ -378,6 +388,10 @@ class Step(BaseMixin, db.Model):
         unique=False,
         default=1,
         nullable=False)
+    
+    level = db.Column(
+        db.Integer()
+    )
 
     def serialize(self):
         return {

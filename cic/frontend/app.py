@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from .forms import LoginForm, SignUpForm
-from ..models import db, User, Course, Stage, Step
+from ..models import db, User, Course, Stage, Step, Enrollment, Achievement
 from .. import login_manager
 import requests
 
@@ -78,7 +78,7 @@ def signup():
             # db.session.commit()
 
 
-            enrollment = Enrollment(user_id=user_id, course_id=1, unit=0)
+            enrollment = Enrollment(user_id=user_id, course_id=1, unit_id=0)
             enrollment.save()
 
             login_user(user)
@@ -91,6 +91,15 @@ def signup():
 def logout():
     logout_user()
     return redirect(url_for('frontend.index'))
+
+@frontend.route('/profile')
+@login_required
+def profile():
+    enrollments = Enrollment.get_by(user_id=current_user.id)
+    course_ids = [ e.course_id for e in enrollments ] 
+    courses = Course.get_many(course_ids)
+    return render_template('frontend/profile.html', courses=courses)
+
 
 @frontend.route('/find')
 def find():
