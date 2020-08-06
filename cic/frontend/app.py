@@ -72,14 +72,7 @@ def signup():
 
             user = User(email=form.email.data, name=form.name.data, admin=admin)
             user.set_password(form.password.data)
-            user_id = user.save_get_id()
-
-            # db.session.add(user)
-            # db.session.commit()
-
-
-            enrollment = Enrollment(user_id=user_id, course_id=1, unit_id=0)
-            enrollment.save()
+            user.save()
 
             login_user(user)
             return redirect(url_for('frontend.index'))
@@ -97,8 +90,10 @@ def logout():
 def profile():
     enrollments = Enrollment.get_by(user_id=current_user.id)
     course_ids = [ e.course_id for e in enrollments ] 
+    unit_ids = [ e.unit_id for e in enrollments ] 
     courses = Course.get_many(course_ids)
-    return render_template('frontend/profile.html', courses=courses)
+    units = Stage.get_many(unit_ids)
+    return render_template('frontend/profile.html', enrollments=enrollments, courses=courses, units=units)
 
 
 @frontend.route('/find')
@@ -109,10 +104,22 @@ def find():
 @frontend.route('/courses/<course_id>')
 @login_required
 def view_course(course_id):
+    enrollment = Enrollment.get_by(user_id=current_user.id, course_id=course_id)
     course = Course.get(course_id)
     units = Stage.get_many(course.stages.split(','))
     units.sort(key=lambda x: x.order)
-    return render_template('frontend/course.html', course=course, units=units)
+
+    if len(enrollment) == 0:
+        return render_template('frontend/course_unenrolled.html', course=course, units=units)
+    return render_template('frontend/course.html', course=course, units=units, enrollment=enrollment)
+
+@frontend.route('/courses/<course_id>/enroll')
+@login_required
+def enroll(course_id):
+    enrollment = Enrollment(user_id=current_user.id, course_id=course_id)
+    enrollment.save()
+    return redirect(url_for('frontend.view_course', course_id=course_id))
+
 
 @frontend.route('/courses/<course_id>/<stage_id>')
 def view_unit(course_id, stage_id):

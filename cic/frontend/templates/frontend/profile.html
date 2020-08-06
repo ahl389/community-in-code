@@ -8,18 +8,34 @@
             {{ current_user.email }}
         </div>
 
-        <div class="module w100">
+        <div class="module w100 mbm">
             <h3>In Progress:</h3>
         </div>
 
         {% for course in courses: %}
-        <div class="module w30 ps card">
-            <h4>{{ course.title }}</h4>
-            <p>{{ course.description }}</p>
+        <div class="module w30 pm card">
+            <div class="container-extender align-middle">
+                <div class="module w100 mbm">
+                    <h4 class="mbs">{{ course.title }}</h4>
+                    <p>{{ course.description | truncate(100) }}</p>
+                </div>
 
-            <div class="container-extender">
+                <div class="module">
+                    {% set e = enrollments | selectattr("course_id", "equalto", course.id ) | list | first  %}
+                    {% set unit_list = units | selectattr("id", "equalto", e.unit_id) | list  %}
+                    {% if unit_list | length > 0 %}
+                    {% set unit = unit_list | first %}
+                    {% set total_units = course.stages.split(',') | length %}
+                    {% set prog = unit.order/total_units %}
+                    {% else %}
+                    {% set prog = 0 %}
+                    {% endif %}
+
+                    {{ prog }}% complete
+
+                </div>
                 <div class="button self-align-right">
-                    <a href="{{ url_for('frontend.view_course', course_id=course_id) }}">Continue</a>
+                    <a href="{{ url_for('frontend.view_course', course_id=course.id) }}">Continue</a>
                 </div>
             </div>
 

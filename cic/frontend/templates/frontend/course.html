@@ -8,6 +8,9 @@
         <div class="container">
             <div class="module w100 text-center mbm">
                 <h2>{{ course.title }}</h2>
+                {% if enrollment is none %}
+                <div class="button inverse">Enroll</div>
+                {% endif %}
             </div>
 
             {% for unit in units %}

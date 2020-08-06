@@ -39,12 +39,10 @@
                 
             </div> -->
 
-            <div class="module self-align-right mob-hide">
+            <div class="module bold self-align-right mob-hide">
 
                 {% if current_user.is_authenticated %}
-                <button class="button inverse large bold heading-font hvr-icon-forward hvr-sweep-to-right mrm">
-                    <a href="{{ url_for('frontend.view_course', course_id=1) }}">Begin Course</a>
-                </button>
+                <a class="prm" href="{{ url_for('frontend.view_course', course_id=1) }}">Course</a>
                 <a class="prm" href="{{ url_for('frontend.profile') }}">Profile</a>
                 <a href="{{ url_for('frontend.logout') }}">Logout</a>
                 {% else %}
