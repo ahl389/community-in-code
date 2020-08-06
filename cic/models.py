@@ -113,6 +113,7 @@ class Enrollment(BaseMixin, db.Model):
         db.Integer()
     )
 
+
 class Achievement(BaseMixin, db.Model):
     """
     Model for user enrollments
@@ -341,6 +342,10 @@ class Step(BaseMixin, db.Model):
         unique=False,
         nullable=True)
 
+    base_lesson = db.Column(
+        db.Integer()
+    )
+
     title = db.Column(
         db.String(255),
         index=False,
@@ -384,7 +389,7 @@ class Step(BaseMixin, db.Model):
         default=1,
         nullable=False)
     
-    levels = db.Column(
+    level = db.Column(
         db.Integer()
     )
 
