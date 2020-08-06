@@ -383,6 +383,10 @@ class Step(BaseMixin, db.Model):
         unique=False,
         default=1,
         nullable=False)
+    
+    levels = db.Column(
+        db.Integer()
+    )
 
     def serialize(self):
         return {
