@@ -8,11 +8,6 @@ class Config:
 
     load_dotenv()
 
-    # General
-    # TESTING = os.environ.get("TESTING")
-    # FLASK_DEBUG = os.environ.get("FLASK_DEBUG")
-
     # Database
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') #'sqlite:///database.db' #
-    #SQLALCHEMY_DATABASE_URI = 'sqlite:///database.db'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') 
     SECRET_KEY = os.environ.get('SECRET_KEY')
