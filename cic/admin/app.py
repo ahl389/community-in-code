@@ -208,7 +208,7 @@ def view_step(step_id):
 @admin.route('/edit/course/<course_id>', methods=['GET', 'POST'])
 def edit_course(course_id):
     course = Course.get(course_id)
-    course_form = courseForm(obj=course)
+    course_form = CourseForm(obj=course)
 
     if request.method == 'POST' and course_form.validate():
         course_form.populate_obj(course)

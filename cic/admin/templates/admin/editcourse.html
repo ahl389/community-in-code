@@ -4,7 +4,7 @@
 <section class="banner">
     <div class="container">
         <div class="module w100 mbm">
-            <h2>Edit {{resource.resource_type}}</h2>
+            <h2>Edit {{course.course_type}}</h2>
         </div>
 
         <div class="module w50 prl">
@@ -12,22 +12,22 @@
                 <div class="module w100 pbm mbm overview">
                     <h3 class="mbs">Details</h3>
                     <form action="" method="post" novalidate>
-                        {{ resource_form.hidden_tag() }}
+                        {{ course_form.hidden_tag() }}
 
                         <p>
-                            {{ resource_form.title.label }}<br>
-                            {{ resource_form.title(class="input-title") }}
+                            {{ course_form.title.label }}<br>
+                            {{ course_form.title(class="input-title") }}
                         </p>
                         <p>
-                            {{ resource_form.resource_type.label }}<br>
-                            {{ resource_form.resource_type(class="select") }}
+                            {{ course_form.course_type.label }}<br>
+                            {{ course_form.course_type(class="select") }}
                         </p>
                         <p>
-                            {{ resource_form.description.label }}<br>
-                            {{ resource_form.description(rows=8) }}
+                            {{ course_form.description.label }}<br>
+                            {{ course_form.description(rows=8) }}
                         </p>
 
-                        <p>{{ resource_form.submit(class="button light bottom-fixed module w40") }}</p>
+                        <p>{{ course_form.submit(class="button light bottom-fixed module w40") }}</p>
                     </form>
                 </div>
             </div>

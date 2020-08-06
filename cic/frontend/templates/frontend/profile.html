@@ -3,14 +3,28 @@
 {% block content %}
 <section class="banner">
     <div class="container">
-        <div class="module w60">
-            {{ current_user.name }}
+        <div class="module w100">
+            {{ current_user.name }}<br>
             {{ current_user.email }}
-
-            {% for course in courses: %}
-            {{ course.title }}
-            {% endfor %}
         </div>
+
+        <div class="module w100">
+            <h3>In Progress:</h3>
+        </div>
+
+        {% for course in courses: %}
+        <div class="module w30 ps card">
+            <h4>{{ course.title }}</h4>
+            <p>{{ course.description }}</p>
+
+            <div class="container-extender">
+                <div class="button self-align-right">
+                    <a href="{{ url_for('frontend.view_course', course_id=course_id) }}">Continue</a>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
     </div>
 </section>
 {% endblock %}
