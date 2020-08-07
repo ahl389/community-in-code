@@ -87,12 +87,17 @@ blockquote {
 
 .card {
   @include card;
+  background-color: white;
 }
 
 .banner.banner-main {
   .container.main {
     border-radius: 25px 25px 0px 0px;
     box-shadow: $shadow;
+
+    a, h3, h4 {
+      color: $secondary-color;
+    }
 
     i.fas {
       color: #ccc;
@@ -298,6 +303,14 @@ input[type=submit] {
 @media (max-width: 1024px) {
   .fas.desktop-hide {
     display: inline-block;
+  }
+}
+
+#banner-enrollments {
+  background-color: #f5f5f5;
+
+  a {
+    color: $secondary-color;
   }
 }
 
