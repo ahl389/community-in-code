@@ -3,13 +3,25 @@
 {% block content %}
 <section class="banner">
     <div class="container">
-        <div class="module w100">
-            {{ current_user.name }}<br>
+        <div class="module w100 mbm pm large card">
+            <h2 class="xl">{{ current_user.name }}</h2>
             {{ current_user.email }}
         </div>
+    </div>
+</section>
+
+
+<section class="banner" id="banner-enrollments">
+    <div class="container">
 
         <div class="module w100 mbm">
-            <h3>In Progress:</h3>
+            {% if courses | length > 0 %}
+            <h2 class="xl">Current course enrollments:</h2>
+            {% else %}
+            <h2 class="xl">Oh no, you're not enrolled in anything!</h2>
+            <p>To get started, try <a href="{{ url_for('frontend.view_course', course_id=1) }}">Learn to Code with
+                    Python.</a></p>
+            {% endif %}
         </div>
 
         {% for course in courses: %}
