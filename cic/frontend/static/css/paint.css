@@ -91,7 +91,7 @@ blockquote {
   border-radius: 25px 25px 0px 0px;
   box-shadow: 0px 0px 25px 3px #eee; }
   .banner.banner-main .container.main a, .banner.banner-main .container.main h3, .banner.banner-main .container.main h4 {
-    color: #fefe77; }
+    color: #455817; }
   .banner.banner-main .container.main i.fas {
     color: #ccc; }
   .banner.banner-main .container.main i.fas:hover {
@@ -252,7 +252,7 @@ input[type=submit] {
 #banner-enrollments {
   background-color: #f5f5f5; }
   #banner-enrollments a {
-    color: #fefe77; }
+    color: #455817; }
 
 @media (max-width: 768px) {
   .hidden-menu {
@@ -626,7 +626,7 @@ button,
   border: none; }
 
 .panel {
-  background-color: #fefe77;
+  background-color: #455817;
   color: white; }
 
 .panel.highlight {
