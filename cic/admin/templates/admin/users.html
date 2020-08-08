@@ -1,0 +1,40 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<section class="banner">
+    <div class="container">
+        <div class="module ps w100">
+            <h2 class="mbm">View Users</h2>
+        </div>
+
+        <div class="module w100">
+            <div class="container">
+                {% for user in users %}
+                <div class="module w100 card ps mbm">
+                    <div class="container-extender align-middle">
+                        <div class="module w70 prm">
+                            <h3>{{ user.name }}</h3>
+                            <p>{{ user.email }}</p>
+                        </div>
+
+                        <div class="module self-align-right">
+                            {% if user.admin %}
+                            <span class="bold">Admin</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="module self-align-right">
+                            <a href="{{ url_for('admin.delete_user', user_id=user.id) }}"
+                                onclick="return confirm('Are you sure you want to delete this user? This cannot be undone.');">
+                                <span class="bold alert">Delete user</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

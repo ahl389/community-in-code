@@ -108,9 +108,21 @@ def find():
     courses = Course.get_all()
     return render_template('admin/view_edit.html', courses=courses)
 
+@admin.route('/users')
+def users():
+    users = User.get_all()
+    return render_template('admin/users.html', users=users)
+
+@admin.route('/users/<user_id>/delete')
+def delete_user(user_id):
+    user = User.get(user_id)
+    user.delete()
+
+    users = User.get_all()
+    return redirect(url_for('admin.users', users=users))
+
+
 # VIEW course, STAGE, STEP
-
-
 @admin.route('/view/course/<course_id>', methods=['GET', 'POST'])
 def view_course(course_id):
     stage_form = StageForm()
