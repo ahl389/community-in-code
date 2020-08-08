@@ -99,7 +99,7 @@ blockquote {
   .banner.banner-main .container.main h1 {
     font-size: 2.5em; }
   .banner.banner-main .container.main h2 {
-    font-size: 1.75em;
+    font-size: 1.5em;
     padding-top: 50px;
     margin-top: 50px;
     border-top: 1px solid #ddd;
@@ -566,7 +566,6 @@ input[type=submit] {
 *** Fill in your own requirements for these as necessary
 **/
 h1, h2 {
-  font-weight: bold;
   color: #2a1758; }
 
 h1 {
@@ -576,12 +575,10 @@ h2 {
   font-size: 2.5em; }
 
 h3 {
-  font-size: 1.75em;
-  font-weight: bold; }
+  font-size: 1.5em; }
 
 h4 {
-  font-size: 1.25em;
-  font-weight: bold; }
+  font-size: 1.25em; }
 
 h5, p, li {
   font-size: 1em;
@@ -657,7 +654,7 @@ button,
   font-size: 1.25em; }
 
 .xl {
-  font-size: 1.75em; }
+  font-size: 1.5em; }
 
 .x2 {
   font-size: 2.5em; }

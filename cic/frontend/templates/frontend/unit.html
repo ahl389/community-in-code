@@ -6,12 +6,18 @@
 
     <section class="banner" id="course-{{ course.title }}">
         <div class="container">
-            <div class="module w100 text-center mbm">
-                <h2 class="mbm">
-                    <a href="{{ url_for('frontend.view_course', course_id=course.id)}}">{{ course.title }}</a></h2>
-                <h2>{{ unit.title }}</h2>
+            <div class="module w70">
+                <p class="bold">
+                    <a href="{{ url_for('frontend.view_course', course_id=course.id)}}">
+                        <i class="fas fa-arrow-left"></i> Back to course page</a></p>
+                <h2 class="mtm">{{ unit.title }}</h2>
+                <p class="large">{{ unit.description }} </p>
             </div>
+        </div>
+    </section>
 
+    <section class="banner" style="background-color:  #fbfbfb">
+        <div class="container">
             {% for step in steps %}
             <div class="module w100 pm mbm card">
                 <a href="{{ url_for('frontend.view_step', course_id=course.id, stage_id=unit.id, step_id=step.id) }}">
