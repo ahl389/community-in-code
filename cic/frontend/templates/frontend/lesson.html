@@ -3,35 +3,34 @@
 {% block content %}
 
 <body>
-
-    <section class="banner banner-main" id="lesson-{{ step.title }}">
-        <div class="container align-center main w80 w90-mob">
-            <div class="module w100 ptxl">
-                <h1 class="text-center mbm x2">{{ step.title }}</h1>
+    <section class="banner" id="lesson-{{ step.title }}">
+        <div class="container">
+            <div class="module w70">
+                <a class="bold" href="{{ url_for('frontend.view_unit', course_id = course.id, stage_id = unit.id) }}">
+                    <i class="fas fa-arrow-left"></i> Back to unit</a>
+                <h2 class="mtm">{{ step.title }}</h2>
+                <p class="large">{{ step.description }}</p>
             </div>
 
-            <div class="module w100">
-                <div class="container align-center">
-                    <div class="module ps">
-                        <a href="#lesson"><i class="fas fa-1x fa-book-open"></i></a>
-                    </div>
 
-                    <div class="module ps">
-                        <a href="#codeexample"><i class="fas fa-1x fa-code"></i></a>
-                    </div>
+        </div>
+    </section>
 
-                    <div class="module ps">
-                        <a href="#tldr"><i class="fas fa-1x fa-th-list"></i></a>
-                    </div>
-
-                    <div class="module ps">
-                        <a href="#activity"><i class="fas fa-1x fa-pencil-ruler"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="module w80 w90-mob pbxl large">
+    <section class="banner" style="background-color:  #fbfbfb" id="lesson-{{ step.title }}">
+        <div class="container align-center">
+            <div class="module w80 w90-mob card pl large">
                 {{ step.content | markdown }}
+            </div>
+
+            <div class="module self-align-right">
+                <p class="mbm">Jump to...</p>
+                <a class="mbm" href="#lesson"><i class="fas fa-1x fa-book-open"></i></a><br><br>
+
+                <a class="mbm" href="#codeexample"><i class="fas fa-1x fa-code"></i></a><br>
+
+                <a class="mbm" href="#tldr"><i class="fas fa-1x fa-th-list"></i></a><br>
+
+                <a class="mbm" href="#activity"><i class="fas fa-1x fa-pencil-ruler"></i></a>
             </div>
         </div>
 
@@ -39,8 +38,8 @@
             <div class="module mtm self-align-left">
                 {% if prev_step %}
                 <a class="bold"
-                    href="{{ url_for('frontend.view_step', course_id = course.id, stage_id = unit.id, step_id=prev_step) }}"><i
-                        class="fas fa-arrow-left"></i> Previous
+                    href="{{ url_for('frontend.view_step', course_id = course.id, stage_id = unit.id, step_id=prev_step) }}">
+                    <i class="fas fa-arrow-left"></i> Previous
                     Lesson</a><br>
                 {% endif %}
 

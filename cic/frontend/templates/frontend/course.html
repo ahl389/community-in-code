@@ -6,13 +6,15 @@
 
     <section class="banner" id="course-{{ course.title }}">
         <div class="container">
-            <div class="module w100 text-center mbm">
+            <div class="module w70">
                 <h2>{{ course.title }}</h2>
-                {% if enrollment is none %}
-                <div class="button inverse">Enroll</div>
-                {% endif %}
+                <p class="large">{{ course.description }}</p>
             </div>
+        </div>
+    </section>
 
+    <section class="banner" style="background-color:#f5f5f5">
+        <div class="container">
             {% for unit in units %}
             <div class="module w100 pm mbm card">
                 <a href="{{ url_for('frontend.view_unit', course_id=course.id, stage_id=unit.id) }}">

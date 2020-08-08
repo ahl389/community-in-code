@@ -10,7 +10,6 @@
 **/
 
 h1, h2 {
-	font-weight: bold;
 	color: $accent-color;
 }
 
@@ -24,12 +23,10 @@ h2 {
 
 h3 {
 	font-size: $xl-font;
-	font-weight: bold;
 }
 
 h4 {
 	font-size: $large-font;
-	font-weight: bold;
 }
 
 h5, p, li {
