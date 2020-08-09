@@ -64,3 +64,8 @@ class StepForm(FlaskForm):
     content = PageDownField('Content')
     notes = TextAreaField('Notes')
     submit = SubmitField('Save')
+
+class RoleForm(FlaskForm):
+    name = SelectField(u'Role Type', choices=[(None, 'Select One'), (
+        'admin', 'Admin'), ('contributor', 'Contributor'), ('member', 'Member')], validators=[DataRequired()])
+    submit = SubmitField('Save')

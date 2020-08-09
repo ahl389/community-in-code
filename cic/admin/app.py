@@ -1,8 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, app
+from functools import wraps
 from flask_login import current_user, login_user, logout_user, login_required
-from .forms import LoginForm, SignUpForm, CourseForm, StageForm, StepForm
-from ..models import db, User, Course, Stage, Step
+from .forms import LoginForm, SignUpForm, CourseForm, StageForm, StepForm, RoleForm
+from ..models import db, User, Course, Stage, Step, Role
 from .. import login_manager
+from .decorators import roles_required
 import requests
 
 admin = Blueprint('admin', __name__,
@@ -10,8 +12,10 @@ admin = Blueprint('admin', __name__,
                   static_folder='static')
 
 
+
 @admin.route("/")
 @login_required
+@roles_required(roles=['admin'])
 def index():
     if current_user.admin:
         return render_template('admin/index.html')
@@ -80,17 +84,20 @@ def signup():
 @admin.route('/logout')
 def logout():
     logout_user()
-    print('logged out')
     return redirect(url_for('admin.index'))
 
 
 @admin.route('/create')
+@login_required
+@roles_required(roles=['admin', 'contributor'])
 def create():
     return render_template('admin/create.html')
 
 
 # CREATE course, DOCUMENTATION GROUP
 @admin.route('/create/course', methods=['GET', 'POST'])
+@login_required
+@roles_required(roles=['admin', 'contributor'])
 def create_course():
     course_form = CourseForm()
 
@@ -104,14 +111,59 @@ def create_course():
 
 
 @admin.route('/find')
+@login_required
+@roles_required(roles=['admin', 'contributor'])
 def find():
     courses = Course.get_all()
     return render_template('admin/view_edit.html', courses=courses)
 
+@admin.route('/users')
+@login_required
+@roles_required(roles=['admin'])
+def users():
+    users = User.get_all()
+    return render_template('admin/users.html', users=users)
+
+@admin.route('/users/roles', methods=['GET', 'POST'])
+@login_required
+@roles_required(roles=['admin'])
+def user_roles():
+    role_form = RoleForm()
+    roles = Role.get_all();
+
+    if role_form.validate_on_submit():
+        role = Role()
+        role_form.populate_obj(role)
+        role.save()
+        return redirect(url_for('admin.user_roles', roles=roles, role_form=role_form))
+
+    return render_template('admin/roles.html', roles=roles, role_form=role_form)
+
+@admin.route('/users/<user_id>/delete')
+@login_required
+@roles_required(roles=['admin'])
+def delete_user(user_id):
+    user = User.get(user_id)
+    user.delete()
+
+    users = User.get_all()
+    return redirect(url_for('admin.users'))
+
+@admin.route('/users/<user_id>/admin')
+@login_required
+@roles_required(roles=['admin'])
+def make_admin(user_id):
+    user = User.get(user_id)
+    admin = Role.get_by_first(name='admin')
+    user.role = admin
+    user.save()
+    return redirect(url_for('admin.users'))
+
+
 # VIEW course, STAGE, STEP
-
-
 @admin.route('/view/course/<course_id>', methods=['GET', 'POST'])
+@login_required
+@roles_required(roles=['admin', 'contributor'])
 def view_course(course_id):
     stage_form = StageForm()
     course = Course.get(course_id)
@@ -156,6 +208,8 @@ def view_course(course_id):
 
 
 @admin.route('/view/stage/<stage_id>', methods=['GET', 'POST'])
+@login_required
+@roles_required(roles=['admin', 'contributor'])
 def view_stage(stage_id):
     #stage_form = StageForm()
     step_form = StepForm()
@@ -199,6 +253,8 @@ def view_stage(stage_id):
 
 
 @admin.route('/view/step/<step_id>', methods=['GET', 'POST'])
+@login_required
+@roles_required(roles=['admin', 'contributor'])
 def view_step(step_id):
     step = Step.get(step_id)
     return render_template('admin/view_step.html', step=step)
@@ -206,6 +262,8 @@ def view_step(step_id):
 
 # EDIT course, STAGE, STEP
 @admin.route('/edit/course/<course_id>', methods=['GET', 'POST'])
+@login_required
+@roles_required(roles=['admin', 'contributor'])
 def edit_course(course_id):
     course = Course.get(course_id)
     course_form = CourseForm(obj=course)
@@ -219,6 +277,8 @@ def edit_course(course_id):
 
 
 @admin.route('/edit/stage/<stage_id>', methods=['GET', 'POST'])
+@login_required
+@roles_required(roles=['admin', 'contributor'])
 def edit_stage(stage_id):
     stage = Stage.get(stage_id)
     stage_form = StageForm(obj=stage)
@@ -232,6 +292,8 @@ def edit_stage(stage_id):
 
 
 @admin.route('/edit/step/<step_id>', methods=['GET', 'POST'])
+@login_required
+@roles_required(roles=['admin', 'contributor'])
 def edit_step(step_id):
     step = Step.get(step_id)
     current_stage_id = step.parent_stage

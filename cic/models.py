@@ -1,5 +1,6 @@
 from . import db, login_manager
 from flask_login import UserMixin
+from flask_user import UserManager
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.dialects.postgresql import JSON
 
@@ -29,6 +30,11 @@ class BaseMixin(object):
     @classmethod
     def get_by(cls, **kw):
         objs = cls.query.filter_by(**kw).all()
+        return objs
+
+    @classmethod
+    def get_by_first(cls, **kw):
+        objs = cls.query.filter_by(**kw).first()
         return objs
 
     def save(self):
@@ -81,6 +87,13 @@ class User(UserMixin, BaseMixin, db.Model):
         db.Boolean
     )
 
+    role_id = db.Column(
+        db.Integer,
+        db.ForeignKey('roles.id')
+    )
+
+    role = db.relationship('Role')
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
@@ -89,6 +102,16 @@ class User(UserMixin, BaseMixin, db.Model):
 
     def __repr__(self):
         return f'<User {self.email}, {self.id}'
+
+
+
+class Role(BaseMixin, db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+    users = db.relationship('User', back_populates="role")
+
+
 
 class Enrollment(BaseMixin, db.Model):
     """
