@@ -9,7 +9,7 @@ def roles_required(roles):
         @wraps(func)
         def decorated_function(*args, **kwargs):
             if current_user:
-                if current_user.role.name not in roles:
+                if current_user.role and current_user.role.name not in roles:
                     return redirect(url_for('admin.whoops'))
                 return func(*args, **kwargs) 
             return func(*args, **kwargs) 

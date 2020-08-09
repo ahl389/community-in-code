@@ -4,6 +4,12 @@
 <section class="banner">
     <div class="container">
         <div class="module w30">
+            {% if err is not none %}
+            <div class="mbm error">
+                {{ err }}
+            </div>
+            {% endif %}
+
             <form action="" method="post" novalidate>
                 {{ form.hidden_tag() }}
                 <p>

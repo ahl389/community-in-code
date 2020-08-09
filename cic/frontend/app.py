@@ -31,22 +31,22 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('frontend.index'))
 
+    err = None
+
     form = LoginForm()
 
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
 
         if user is None:
-            message = "A user with that email address does not exist, please sign up."
-            return redirect(url_for('frontend.signup', message=message))
+            err = "A user with that email address does not exist, please sign up."
         elif not user.check_password(form.password.data):
             err = 'Invalid username or password'
-            return redirect(url_for('frontend.login'), err=err)
+        else:
+            login_user(user, remember=form.remember_me.data, force=True)
+            return redirect(url_for('frontend.index'))
 
-        login_user(user, remember=form.remember_me.data, force=True)
-        return redirect(url_for('frontend.index'))
-
-    return render_template('frontend/login.html', form=form)
+    return render_template('frontend/login.html', form=form, err=err)
 
 
 @frontend.route("/signup", methods=['GET', 'POST'])
