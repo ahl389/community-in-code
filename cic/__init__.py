@@ -18,14 +18,17 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 
 
+
 def create_app():
     """Initialize the core application."""
     app = Flask(__name__, instance_relative_config=False)
     logging.basicConfig(level=logging.DEBUG)
     app.config.from_object('config.Config')
 
+
     db.init_app(app)
     login_manager.init_app(app)
+
     Scss(app)
     Markdown(app, extensions=['fenced_code', 'tables', 'codehilite'])
     pagedown = PageDown(app)
@@ -33,6 +36,9 @@ def create_app():
     migrate = Migrate(app, db, compare_type=True)
     manager = Manager(app)
     manager.add_command('db', MigrateCommand)
+
+
+
 
     with app.app_context():
         from cic.admin.app import admin
@@ -43,7 +49,8 @@ def create_app():
         app.register_blueprint(admin, url_prefix='/admin')
         app.register_blueprint(api, url_prefix='/api')
         app.register_blueprint(frontend)
-        
+
+
 
         # Create tables for our models
         db.create_all()
@@ -52,5 +59,6 @@ def create_app():
             migrate.init_app(app, db, render_as_batch=True)
         else:
             migrate.init_app(app, db)
+
 
         return app

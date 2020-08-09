@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from .forms import LoginForm, SignUpForm
-from ..models import db, User, Course, Stage, Step, Enrollment, Achievement
+from ..models import db, User, Course, Stage, Step, Enrollment, Achievement, Role
 from .. import login_manager
 import requests
 
@@ -60,7 +60,7 @@ def signup():
 
     if form.validate_on_submit():
         email = form.email.data
-        admin = False
+        role = Role.get_by_first(name='member')
 
         user = User.query.filter_by(email=email).first()
 
@@ -68,9 +68,9 @@ def signup():
             err = "A user with that email address already exists."
         else:
             if email in ['ashleyboucher@hey.com', 'ashleyhlivingston@gmail.com', 'ashleyhboucher@gmail.com']:
-                admin = True
+                role = Role.get_by_first(name='admin')
 
-            user = User(email=form.email.data, name=form.name.data, admin=admin)
+            user = User(email=form.email.data, name=form.name.data, role=role)
             user.set_password(form.password.data)
             user.save()
 
@@ -122,6 +122,7 @@ def enroll(course_id):
 
 
 @frontend.route('/courses/<course_id>/<stage_id>')
+@login_required
 def view_unit(course_id, stage_id):
     course = Course.get(course_id)
     unit = Stage.get(stage_id)
@@ -130,6 +131,7 @@ def view_unit(course_id, stage_id):
     return render_template('frontend/unit.html', course=course, unit=unit, steps=steps)
 
 @frontend.route('/courses/<course_id>/<stage_id>/<step_id>')
+@login_required
 def view_step(course_id, stage_id, step_id):
     course = Course.get(course_id)
     unit = Stage.get(stage_id)

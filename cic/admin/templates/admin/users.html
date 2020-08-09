@@ -18,10 +18,8 @@
                         </div>
 
                         <div class="module self-align-right">
-                            {% if user.admin %}
-                            <span class="bold">Admin</span>
-                            {% endif %}
-                        </div>
+                            {{ user.role.name }}<br>
+                            <a href="{{ url_for('admin.make_admin', user_id=user.id) }}">Make Admin</a> </div>
 
                         <div class="module self-align-right">
                             <a href="{{ url_for('admin.delete_user', user_id=user.id) }}"
