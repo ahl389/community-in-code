@@ -19,7 +19,9 @@
             <h2 class="xl">Current course enrollments:</h2>
             {% else %}
             <h2 class="xl">Oh no, you're not enrolled in anything!</h2>
-            <p>To get started, try <a href="{{ url_for('frontend.view_course', course_id=1) }}">Learn to Code with
+            <p>To get started, try <a
+                    href="{{ url_for('frontend.view_course', course_slug='learn-to-code-with-python') }}">Learn to
+                    Code with
                     Python.</a></p>
             {% endif %}
         </div>
@@ -47,7 +49,7 @@
 
                 </div>
                 <div class="button self-align-right">
-                    <a href="{{ url_for('frontend.view_course', course_id=course.id) }}">Continue</a>
+                    <a href="{{ url_for('frontend.view_course', course_slug=course.slug) }}">Continue</a>
                 </div>
             </div>
 

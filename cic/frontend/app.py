@@ -112,7 +112,7 @@ def view_course(course_slug):
 
     if current_user.is_authenticated:
         enrollment = Enrollment.get_by(
-            user_id=current_user.id, course_id=course_id)
+            user_id=current_user.id, course_id=course.id)
 
         if len(enrollment) == 0:
             return render_template('frontend/course_unenrolled.html', course=course, units=units, author=author)
