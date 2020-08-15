@@ -104,18 +104,21 @@ def find():
 
 
 @frontend.route('/courses/<course_id>')
-@login_required
 def view_course(course_id):
-    enrollment = Enrollment.get_by(
-        user_id=current_user.id, course_id=course_id)
     course = Course.get(course_id)
     author = User.get(course.author)
     units = Stage.get_many(course.stages.split(','))
     units.sort(key=lambda x: x.order)
 
-    if len(enrollment) == 0:
-        return render_template('frontend/course_unenrolled.html', course=course, units=units, author=author)
-    return render_template('frontend/course.html', course=course, units=units, enrollment=enrollment, author=author)
+    if current_user.is_authenticated:
+        enrollment = Enrollment.get_by(
+            user_id=current_user.id, course_id=course_id)
+
+        if len(enrollment) == 0:
+            return render_template('frontend/course_unenrolled.html', course=course, units=units, author=author)
+        return render_template('frontend/course.html', course=course, units=units, enrollment=enrollment, author=author)
+    else:
+        return render_template('frontend/course_unauthenticated.html', course=course, units=units, author=author)
 
 
 @frontend.route('/courses/<course_id>/enroll')
