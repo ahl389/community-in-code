@@ -103,43 +103,47 @@ def find():
     return render_template('frontend/view_edit.html', courses=courses)
 
 
-@frontend.route('/courses/<course_id>')
-@login_required
-def view_course(course_id):
-    enrollment = Enrollment.get_by(
-        user_id=current_user.id, course_id=course_id)
-    course = Course.get(course_id)
+@frontend.route('/courses/<course_slug>')
+def view_course(course_slug):
+    course = Course.get_by_first(slug=course_slug)
     author = User.get(course.author)
     units = Stage.get_many(course.stages.split(','))
     units.sort(key=lambda x: x.order)
 
-    if len(enrollment) == 0:
-        return render_template('frontend/course_unenrolled.html', course=course, units=units, author=author)
-    return render_template('frontend/course.html', course=course, units=units, enrollment=enrollment, author=author)
+    if current_user.is_authenticated:
+        enrollment = Enrollment.get_by(
+            user_id=current_user.id, course_id=course.id)
+
+        if len(enrollment) == 0:
+            return render_template('frontend/course_unenrolled.html', course=course, units=units, author=author)
+        return render_template('frontend/course.html', course=course, units=units, enrollment=enrollment, author=author)
+    else:
+        return render_template('frontend/course_unauthenticated.html', course=course, units=units, author=author)
 
 
 @frontend.route('/courses/<course_id>/enroll')
 @login_required
 def enroll(course_id):
+    course = Course.get(course_id)
     enrollment = Enrollment(user_id=current_user.id, course_id=course_id)
     enrollment.save()
-    return redirect(url_for('frontend.view_course', course_id=course_id))
+    return redirect(url_for('frontend.view_course', course_slug=course_slug))
 
 
-@frontend.route('/courses/<course_id>/<stage_id>')
+@frontend.route('/courses/<course_slug>/<stage_id>')
 @login_required
-def view_unit(course_id, stage_id):
-    course = Course.get(course_id)
+def view_unit(course_slug, stage_id):
+    course = Course.get_by_first(slug=course_slug)
     unit = Stage.get(stage_id)
     steps = Step.get_many(unit.steps.split(','))
     steps.sort(key=lambda x: x.order)
     return render_template('frontend/unit.html', course=course, unit=unit, steps=steps)
 
 
-@frontend.route('/courses/<course_id>/<stage_id>/<step_id>')
+@frontend.route('/courses/<course_slug>/<stage_id>/<step_id>')
 @login_required
-def view_step(course_id, stage_id, step_id):
-    course = Course.get(course_id)
+def view_step(course_slug, stage_id, step_id):
+    course = Course.get_by_first(slug=course_slug)
     unit = Stage.get(stage_id)
     steps = Step.get_many(unit.steps.split(','))
     step = Step.get(step_id)

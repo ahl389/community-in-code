@@ -233,6 +233,10 @@ class Course(BaseMixin, db.Model):
         db.Integer()
     )
 
+    slug = db.Column(
+        db.String(255)
+    )
+
     course_type = db.Column(
         db.String(64),
         index=False,
