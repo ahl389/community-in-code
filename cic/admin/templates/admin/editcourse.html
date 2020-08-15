@@ -26,8 +26,12 @@
                             {{ course_form.description.label }}<br>
                             {{ course_form.description(rows=8) }}
                         </p>
+                        <p>
+                            {{ course_form.slug.label }}<br>
+                            {{ course_form.slug() }}
+                        </p>
 
-                        <select name="author">
+                        <select name="author" class="select">
                             {% for author in authors %}
                             <option value="{{ author.id }}">{{ author.name }}</option>
                             {% endfor %}

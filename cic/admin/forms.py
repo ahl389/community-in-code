@@ -44,6 +44,7 @@ class CourseForm(FlaskForm):
         'tutorial', 'Tutorial'), ('course', 'Course')], validators=[DataRequired()])
     description = TextAreaField('Description')
     stages = HiddenField('Stages')
+    slug = StringField('Slug', validators=[DataRequired()])
     submit = SubmitField('Save')
 
 
@@ -64,6 +65,7 @@ class StepForm(FlaskForm):
     content = PageDownField('Content')
     notes = TextAreaField('Notes')
     submit = SubmitField('Save')
+
 
 class RoleForm(FlaskForm):
     name = SelectField(u'Role Type', choices=[(None, 'Select One'), (

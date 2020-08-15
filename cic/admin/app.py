@@ -167,6 +167,7 @@ def make_admin(user_id):
 def view_course(course_id):
     stage_form = StageForm()
     course = Course.get(course_id)
+    author = User.get(course.author)
 
     if stage_form.validate_on_submit():
         # create stage from form data
@@ -204,7 +205,7 @@ def view_course(course_id):
     else:
         stages = []
 
-    return render_template('admin/view_course.html', course=course, stages=stages, stage_form=stage_form)
+    return render_template('admin/view_course.html', course=course, stages=stages, author=author, stage_form=stage_form)
 
 
 @admin.route('/view/stage/<stage_id>', methods=['GET', 'POST'])
