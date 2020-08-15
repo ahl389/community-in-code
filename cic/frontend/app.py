@@ -6,17 +6,17 @@ from .. import login_manager
 import requests
 
 frontend = Blueprint('frontend', __name__,
-                     template_folder='templates', 
-                     static_folder='static', 
+                     template_folder='templates',
+                     static_folder='static',
                      static_url_path='/%s' % __name__)
 
 
 @frontend.route("/")
 def index():
-    #if current_user.is_authenticated:
+    # if current_user.is_authenticated:
     return render_template('frontend/index.html')
-    #else:
-        #return render_template('frontend/splash.html')
+    # else:
+    # return render_template('frontend/splash.html')
 
 
 @frontend.route("/whoops")
@@ -85,12 +85,13 @@ def logout():
     logout_user()
     return redirect(url_for('frontend.index'))
 
+
 @frontend.route('/profile')
 @login_required
 def profile():
     enrollments = Enrollment.get_by(user_id=current_user.id)
-    course_ids = [ e.course_id for e in enrollments ] 
-    unit_ids = [ e.unit_id for e in enrollments ] 
+    course_ids = [e.course_id for e in enrollments]
+    unit_ids = [e.unit_id for e in enrollments]
     courses = Course.get_many(course_ids)
     units = Stage.get_many(unit_ids)
     return render_template('frontend/profile.html', enrollments=enrollments, courses=courses, units=units)
@@ -101,17 +102,21 @@ def find():
     courses = Course.get_all()
     return render_template('frontend/view_edit.html', courses=courses)
 
+
 @frontend.route('/courses/<course_id>')
 @login_required
 def view_course(course_id):
-    enrollment = Enrollment.get_by(user_id=current_user.id, course_id=course_id)
+    enrollment = Enrollment.get_by(
+        user_id=current_user.id, course_id=course_id)
     course = Course.get(course_id)
+    author = User.get(course.author)
     units = Stage.get_many(course.stages.split(','))
     units.sort(key=lambda x: x.order)
 
     if len(enrollment) == 0:
-        return render_template('frontend/course_unenrolled.html', course=course, units=units)
-    return render_template('frontend/course.html', course=course, units=units, enrollment=enrollment)
+        return render_template('frontend/course_unenrolled.html', course=course, units=units, author=author)
+    return render_template('frontend/course.html', course=course, units=units, enrollment=enrollment, author=author)
+
 
 @frontend.route('/courses/<course_id>/enroll')
 @login_required
@@ -130,6 +135,7 @@ def view_unit(course_id, stage_id):
     steps.sort(key=lambda x: x.order)
     return render_template('frontend/unit.html', course=course, unit=unit, steps=steps)
 
+
 @frontend.route('/courses/<course_id>/<stage_id>/<step_id>')
 @login_required
 def view_step(course_id, stage_id, step_id):
@@ -147,6 +153,4 @@ def view_step(course_id, stage_id, step_id):
         if s.order == step.order - 1:
             prev_step = s.id
 
-    
     return render_template('frontend/lesson.html', course=course, unit=unit, step=step, next_step=next_step, prev_step=prev_step)
-

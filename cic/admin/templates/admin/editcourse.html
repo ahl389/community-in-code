@@ -27,6 +27,12 @@
                             {{ course_form.description(rows=8) }}
                         </p>
 
+                        <select name="author">
+                            {% for author in authors %}
+                            <option value="{{ author.id }}">{{ author.name }}</option>
+                            {% endfor %}
+                        </select>
+
                         <p>{{ course_form.submit(class="button light bottom-fixed module w40") }}</p>
                     </form>
                 </div>

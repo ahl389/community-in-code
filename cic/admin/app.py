@@ -8,9 +8,8 @@ from .decorators import roles_required
 import requests
 
 admin = Blueprint('admin', __name__,
-                  template_folder='templates', 
+                  template_folder='templates',
                   static_folder='static')
-
 
 
 @admin.route("/")
@@ -114,6 +113,7 @@ def find():
     courses = Course.get_all()
     return render_template('admin/view_edit.html', courses=courses)
 
+
 @admin.route('/users')
 @login_required
 @roles_required(roles=['admin'])
@@ -121,12 +121,13 @@ def users():
     users = User.get_all()
     return render_template('admin/users.html', users=users)
 
+
 @admin.route('/users/roles', methods=['GET', 'POST'])
 @login_required
 @roles_required(roles=['admin'])
 def user_roles():
     role_form = RoleForm()
-    roles = Role.get_all();
+    roles = Role.get_all()
 
     if role_form.validate_on_submit():
         role = Role()
@@ -135,6 +136,7 @@ def user_roles():
         return redirect(url_for('admin.user_roles', roles=roles, role_form=role_form))
 
     return render_template('admin/roles.html', roles=roles, role_form=role_form)
+
 
 @admin.route('/users/<user_id>/delete')
 @login_required
@@ -145,6 +147,7 @@ def delete_user(user_id):
 
     users = User.get_all()
     return redirect(url_for('admin.users'))
+
 
 @admin.route('/users/<user_id>/admin')
 @login_required
@@ -184,12 +187,12 @@ def view_course(course_id):
 
         if not course.stages:
             course.stages = str(stage_id)
-        else: 
+        else:
             stages = course.stages.split(',')
             stages.append(str(stage_id))
             stages = ','.join(stages)
             course.stages = stages
-            
+
         course.save()
 
         # redirect to same view course page
@@ -219,7 +222,7 @@ def view_stage(stage_id):
         step_form.populate_obj(step)
         step.parent_stage = stage_id
         step.parent_course = stage.parent_course
-        
+
         if stage.steps:
             step.order = len(steps) + 1
         else:
@@ -230,12 +233,11 @@ def view_stage(stage_id):
         # update step value of stage
         if not stage.steps:
             stage.steps = str(step_id)
-        else: 
+        else:
             steps.append(str(step_id))
             steps = ','.join(steps)
             stage.steps = steps
         stage.save()
-
 
         # redirect to same view course page
         return redirect(url_for('admin.view_stage', stage_id=stage_id))
@@ -263,14 +265,16 @@ def view_step(step_id):
 @roles_required(roles=['admin', 'contributor'])
 def edit_course(course_id):
     course = Course.get(course_id)
+    authors = User.get_by_role('admin', 'contributor')
     course_form = CourseForm(obj=course)
 
     if request.method == 'POST' and course_form.validate():
         course_form.populate_obj(course)
+        course.author = request.form.get('author')
         course.save()
         return redirect(url_for('admin.view_course', course_id=course_id))
 
-    return render_template('admin/editcourse.html', course_form=course_form, course=course)
+    return render_template('admin/editcourse.html', course_form=course_form, course=course, authors=authors)
 
 
 @admin.route('/edit/stage/<stage_id>', methods=['GET', 'POST'])

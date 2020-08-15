@@ -29,11 +29,18 @@ class BaseMixin(object):
         return objs
 
     @classmethod
+    def get_many_by(cls, **kw):
+        field, options = next(iter(kw.items()))
+        attr = getattr(cls, field)
+        objs = cls.query.filter(attr.in_(options)).all()
+        return objs
+
+    @ classmethod
     def get_by(cls, **kw):
         objs = cls.query.filter_by(**kw).all()
         return objs
 
-    @classmethod
+    @ classmethod
     def get_by_first(cls, **kw):
         objs = cls.query.filter_by(**kw).first()
         return objs
@@ -54,7 +61,7 @@ class BaseMixin(object):
         return db.session.commit()
 
 
-@login_manager.user_loader
+@ login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
 
@@ -94,6 +101,15 @@ class User(UserMixin, BaseMixin, db.Model):
     )
 
     role = db.relationship('Role')
+
+    @ classmethod
+    def get_by_role(self, *roles):
+        users = []
+
+        for role in roles:
+            users.extend(Role.get_by_first(name=role).users)
+
+        return users
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
