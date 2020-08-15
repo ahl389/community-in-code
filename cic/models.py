@@ -4,6 +4,7 @@ from flask_user import UserManager
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.dialects.postgresql import JSON
 
+
 class BaseMixin(object):
     @classmethod
     def create(cls, **kw):
@@ -104,13 +105,11 @@ class User(UserMixin, BaseMixin, db.Model):
         return f'<User {self.email}, {self.id}'
 
 
-
 class Role(BaseMixin, db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(50), unique=True)
     users = db.relationship('User', back_populates="role")
-
 
 
 class Enrollment(BaseMixin, db.Model):
@@ -213,6 +212,10 @@ class Course(BaseMixin, db.Model):
     id = db.Column(
         db.Integer,
         primary_key=True)
+
+    author = db.Column(
+        db.Integer()
+    )
 
     course_type = db.Column(
         db.String(64),
@@ -411,7 +414,7 @@ class Step(BaseMixin, db.Model):
         unique=False,
         default=1,
         nullable=False)
-    
+
     level = db.Column(
         db.Integer()
     )

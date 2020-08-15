@@ -17,10 +17,7 @@ admin = Blueprint('admin', __name__,
 @login_required
 @roles_required(roles=['admin'])
 def index():
-    if current_user.admin:
-        return render_template('admin/index.html')
-    else:
-        return render_template('admin/protected.html')
+    return render_template('admin/index.html')
 
 
 @admin.route("/whoops")
