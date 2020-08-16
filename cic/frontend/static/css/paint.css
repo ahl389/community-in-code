@@ -1,5 +1,25 @@
 /* Padding, margin */
 /* Font */
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("./font/IBMPlexSans-Medium.ttf");
+  src: url("{{ url_for('frontend.static', filename='font/IBMPlexSans-Medium.ttf') }}");
+  font-weight: 400; }
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("./font/IBMPlexSans-Bold.ttf");
+  src: url("{{ url_for('frontend.static', filename='font/IBMPlexSans-Bold.ttf') }}");
+  font-weight: 700;
+  font-weight: bold; }
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("./font/IBMPlexSans-MediumItalic.ttf");
+  src: url("{{ url_for('frontend.static', filename='font/IBMPlexSans-MediumItalic.ttf') }}");
+  font-weight: 400;
+  font-style: italic; }
+
 /* Breakpoints */
 /* Colors */
 /* Shadow/Card */
@@ -144,7 +164,7 @@ p code, li code {
 input, .submit {
   box-sizing: border-box;
   font-size: 1em;
-  font-family: "Nunito", sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   outline: none;
   border: none;
   border-radius: 5px;
@@ -565,8 +585,10 @@ input[type=submit] {
 /**
 *** Fill in your own requirements for these as necessary
 **/
-h1, h2 {
-  color: #2a1758; }
+h1, h2, h3 {
+  color: #2a1758;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: bold; }
 
 h1 {
   font-size: 3.5em; }
@@ -675,7 +697,7 @@ button,
   text-transform: capitalize; }
 
 .heading-font {
-  font-family: "Nunito", sans-serif; }
+  font-family: "IBM Plex Sans", sans-serif; }
 
 .bold {
   font-weight: 700; }
@@ -684,7 +706,7 @@ button,
   font-weight: 300; }
 
 .italic {
-  text-decoration: italic; }
+  font-style: italic; }
 
 .text-left {
   text-align: left; }

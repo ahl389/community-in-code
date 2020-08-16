@@ -9,8 +9,10 @@
 *** Fill in your own requirements for these as necessary
 **/
 
-h1, h2 {
+
+h1, h2, h3 {
 	color: $accent-color;
+	@include heading-bold;
 }
 
 h1 {
@@ -159,7 +161,7 @@ button,
 }
 
 .italic {
-	text-decoration: italic;
+	font-style: italic;
 }
 
 .text-left {

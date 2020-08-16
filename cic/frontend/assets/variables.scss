@@ -15,8 +15,33 @@ $x2-font: 2.5em;
 $x3-font: 3.5em;
 $x4-font: 4em;
 
-$heading-font-family: 'Nunito', sans-serif;
+@font-face {
+	font-family: "IBM Plex Sans";
+    src: url("./font/IBMPlexSans-Medium.ttf");
+    src: url("{{ url_for('frontend.static', filename='font/IBMPlexSans-Medium.ttf') }}");
+    font-weight: 400;
+}
+
+@font-face {
+	font-family: "IBM Plex Sans";
+    src: url("./font/IBMPlexSans-Bold.ttf");
+    src: url("{{ url_for('frontend.static', filename='font/IBMPlexSans-Bold.ttf') }}");
+    font-weight: 700;
+    font-weight: bold;
+}
+
+@font-face {
+	font-family: "IBM Plex Sans";
+    src: url("./font/IBMPlexSans-MediumItalic.ttf");
+    src: url("{{ url_for('frontend.static', filename='font/IBMPlexSans-MediumItalic.ttf') }}");
+    font-weight: 400;
+    font-style: italic;
+}
+
+
+$heading-font-family: 'IBM Plex Sans', sans-serif;
 $content-font-family: 'Nunito', sans-serif;
+
 
 /* Breakpoints */
 $mobile: 768px;
@@ -39,3 +64,9 @@ $border-radius: 25px;
     border-radius: $border-radius;
     box-shadow: $shadow;
 }
+
+@mixin heading-bold {
+    font-family: $heading-font-family;
+    font-weight: bold;
+}
+
