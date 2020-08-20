@@ -6,6 +6,9 @@
         <div class="module w65 prl">
             <div class="container">
                 <div class="module w100 pbm mbm overview">
+                    <p class="bold">
+                        <a href="{{ url_for('admin.view_course', course_id=stage.parent_course)}}">
+                            <i class="fas fa-arrow-left"></i> Back to editing course</a></p>
                     <h2>{{stage.title}}</h2>
                     <p>{{stage.description}}</p>
                 </div>
@@ -13,8 +16,17 @@
                 <div class="module w95">
                     <div class="container">
                         <div class="module w100 mbm">
-                            <h3>Content</h3>
-                            <p class="italic">Click on any the title of any step to edit it.</p>
+                            <div class="container">
+                                <div class="module">
+                                    <h3>Lessons</h3>
+                                    <p class="italic">Click on any the title of any lesson to edit it.</p>
+                                </div>
+
+                                <div class="module self-align-right">
+                                    <h3><i class="fas fa-sort prs" id="button-reorder-content"></i>
+                                        <i class="fas fa-plus" id="button-add-step"></i></h3>
+                                </div>
+                            </div>
                         </div>
 
                         {% for step in steps %}
@@ -40,28 +52,35 @@
 
         <div class="module w35 pll">
             <div class="container">
-                <div class="module large w100 button light mbs text-center" id="button-edit-course">
+                <!-- <div class="module large w100 button light mbs text-center" id="button-edit-course">
                     <a href="{{ url_for('admin.view_course', course_id=stage.parent_course) }}" id="a-edit-course">
                         Back to course
                     </a>
-                </div>
+                </div> -->
 
                 <div class="module large w100 button light mbs text-center" id="button-edit-course">
                     <a href="{{ url_for('admin.edit_stage', stage_id=stage.id) }}" id="a-edit-course">
-                        Edit Stage Details
+                        Edit Unit Details
                     </a>
                 </div>
 
+                <div class="module large w100 button light mbs text-center" id="button-edit-course">
+                    <a href="{{ url_for('frontend.view_unit', course_slug=course.slug, stage_id=stage.id) }}"
+                        id="a-view-course">
+                        View Unit
+                    </a>
+                </div>
+                <!-- 
                 <div class="module large w100 button light mbs text-center" id="button-reorder-content">
                     Reorder Steps
                 </div>
 
                 <div class="module large w100 button light mbm text-center" id="button-add-step">
                     Add Step
-                </div>
+                </div> -->
 
-                <div class="module w100 pbm mbm step-form hidden-form">
-                    <h3 class="mbm">New Step</h3>
+                <div class="module w100 mtm pbm mbm step-form hidden-form">
+                    <h3 class="mbm">New Lesson</h3>
                     <form action="" method="post" novalidate>
                         {{ step_form.hidden_tag() }}
 
@@ -80,25 +99,22 @@
                             {{ step_form.step_type(class="select") }}
                         </div>
 
-                        <div class="module mbs">
+                        <!-- <div class="module mbs">
                             <label>Stage</label><br>
                             <select class="select">
                                 {% for stage in stages %}
                                 <option value={{stage.id}}>{{stage.title}}</option>
                                 {% endfor %}
                             </select>
+                        </div> -->
+
+                        <div class="button inverse mbs">
+                            {{ step_form.submit() }}
                         </div>
 
-                        <div class="module mbs">
-                            {{ step_form.content.label }}<br>
-                            {{ step_form.content(rows=20) }}
-                        </div>
-
-                        {{ step_form.submit(class="button light") }}
-
-                        <div class="button button-cancel-add">
+                        <span class="button-cancel-add">
                             Cancel
-                        </div>
+                        </span>
                     </form>
                 </div>
 
@@ -178,12 +194,17 @@
 
 
 <style>
+    .fa,
+    .fas {
+        cursor: pointer;
+    }
+
     #stage-order {
         display: none;
     }
 
     .step-form {
-        display: none
+        display: none;
     }
 
     .hidden-form {

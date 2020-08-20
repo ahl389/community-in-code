@@ -8,15 +8,25 @@
                 <div class="module w100 pbm mbm overview">
                     <h2>{{course.title}}</h2>
                     <p>{{course.description}}</p>
-                    <p>Course by {{ author.name }}</p>
-                    <p>/{{ course.slug }}</p>
+                    <p><span class="bold">Author:</span> {{ author.name }}<br>
+                        <span class="bold">Slug:</span> /{{ course.slug }}</p>
                 </div>
 
                 <div class="module w95">
                     <div class="container">
                         <div class="module w100 mbm">
-                            <h3>{{ course.course_type.capitalize() }} Sections</h3>
-                            <p class="italic">Click on any section to edit it, or the steps within it.</p>
+                            <div class="container">
+                                <div class="module">
+                                    <h3>{{ course.course_type.capitalize() }} Units</h3>
+                                    <p class="italic">Click on any unit to edit it, or the steps within it.</p>
+                                </div>
+
+                                <div class="module self-align-right">
+                                    <h3><i class="fas fa-sort prs" id="button-reorder-content"></i>
+                                        <i class="fas fa-plus" id="button-add-stage"></i></h3>
+                                </div>
+                            </div>
+
                         </div>
 
 
@@ -48,16 +58,22 @@
                     </a>
                 </div>
 
-                <div class="module large w100 button light mbs text-center" id="button-reorder-content">
+                <div class="module large w100 button light mbs text-center" id="button-edit-course">
+                    <a href="{{ url_for('frontend.view_course', course_slug=course.slug) }}" id="a-view-course">
+                        View Course
+                    </a>
+                </div>
+
+                <!-- <div class="module large w100 button light mbs text-center" id="button-reorder-content">
                     Reorder Content
-                </div>
+                </div> -->
 
-                <div class="module large w100 button light mbs text-center" id="button-add-stage">
+                <!-- <div class="module large w100 button light mbs text-center" id="button-add-stage">
                     Add Section
-                </div>
+                </div> -->
 
-                <div class="module w100 pbm mbm stage-form hidden-form">
-                    <h3 class="mbm">New Stage</h3>
+                <div class="module w100 mtm pbm mbm stage-form hidden-form">
+                    <h3 class="mbm">New Unit</h3>
 
                     <form action="" method="post" novalidate>
 
@@ -71,14 +87,18 @@
 
                         <div class="module mbs">
                             {{ stage_form.description.label }}<br>
-                            {{ stage_form.description }}
+                            {{ stage_form.description(rows=10) }}
                         </div>
 
-                        {{ stage_form.submit(class="button light") }}
+                        <div class="button inverse">
+                            {{ stage_form.submit() }}
+                        </div>
 
-                        <button class="button button-cancel-add">
+
+                        <span class="button-cancel-add">
                             Cancel
-                        </button>
+                        </span>
+
                     </form>
                 </div>
 
@@ -156,12 +176,17 @@
 
 
 <style>
+    .fa,
+    .fas {
+        cursor: pointer;
+    }
+
     #stage-order {
         display: none;
     }
 
-    .step-form {
-        display: none
+    .stage-form {
+        display: none;
     }
 
     .hidden-form {

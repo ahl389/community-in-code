@@ -215,6 +215,7 @@ def view_stage(stage_id):
     #stage_form = StageForm()
     step_form = StepForm()
     stage = Stage.get(stage_id)
+    course = Course.get(stage.parent_course)
     steps = stage.steps.split(',')
 
     if step_form.validate_on_submit():
@@ -249,7 +250,7 @@ def view_stage(stage_id):
     else:
         steps = []
 
-    return render_template('admin/view_stage.html', step_form=step_form, stage=stage, steps=steps)
+    return render_template('admin/view_stage.html', step_form=step_form, stage=stage, steps=steps, course=course)
 
 
 @admin.route('/view/step/<step_id>', methods=['GET', 'POST'])
@@ -257,7 +258,8 @@ def view_stage(stage_id):
 @roles_required(roles=['admin', 'contributor'])
 def view_step(step_id):
     step = Step.get(step_id)
-    return render_template('admin/view_step.html', step=step)
+    course = Course.get(step.parent_course)
+    return render_template('admin/view_step.html', step=step, course=course)
 
 
 # EDIT course, STAGE, STEP

@@ -60,7 +60,7 @@ class StepForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description')
     order = HiddenField('Order')
-    step_type = SelectField(u'Step Type', choices=[
+    step_type = SelectField(u'Lesson Type', choices=[
                             ('video', 'Video'), ('text', 'Text')])
     content = PageDownField('Content')
     notes = TextAreaField('Notes')

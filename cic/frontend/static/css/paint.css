@@ -20,6 +20,17 @@
   font-weight: 400;
   font-style: italic; }
 
+@font-face {
+  font-family: "Dank Mono";
+  src: url("{{ url_for('frontend.static', filename='font/DankMono-Regular.ttf') }}");
+  font-weight: 400; }
+
+@font-face {
+  font-family: "Dank Mono";
+  src: url("{{ url_for('frontend.static', filename='font/DankMono-Italic.ttf') }}");
+  font-weight: 400;
+  font-style: italic; }
+
 /* Breakpoints */
 /* Colors */
 /* Shadow/Card */
@@ -51,6 +62,26 @@ li {
 blockquote {
   border-left: 6px solid #ddd;
   padding-left: 15px; }
+
+textarea {
+  width: 100%;
+  box-shadow: 0px 0px 25px 3px #eee;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  padding: 8px 15px;
+  box-sizing: border-box;
+  font-family: "Dank Mono", monospace;
+  font-size: 1em; }
+
+select, .select {
+  width: 100%;
+  padding: 8px 15px;
+  font-family: "Nunito";
+  font-size: 1em;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 0px 25px 3px #eee; }
 
 .note {
   background-color: rgba(117, 190, 87, 0.7);

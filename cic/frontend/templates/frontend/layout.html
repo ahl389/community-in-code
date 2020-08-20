@@ -91,13 +91,30 @@
         </div>
     </section>
 
+
+
+    {% if current_user.role.name == 'admin' %}
+    <a href="{{ url_for('admin.index')  }}">
+        <div class="module text-center inverse button large bold" id="admin-toggle">
+            Admin
+        </div>
+    </a>
+    {% else %}
     <div class="kofi mob-hide">
         <script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
         <script
             type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'A0A01TNKN'); kofiwidget2.draw();</script>
 
     </div>
+    {% endif %}
 
+    <style>
+        #admin-toggle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+        }
+    </style>
 
     {% block content %}
     {% endblock %}
