@@ -10,13 +10,13 @@
         <div class="module w100">
             <div class="container">
                 {% for course in courses %}
-                <div class="module w33 card mls mrs">
+                <div class="module w33 pm card mls mrs">
                     <div class="container">
-                        <div class="module w100 pls ptxs pbxs prs card-title">
+                        <div class="module w100 mbs card-title">
                             <a href="{{ url_for('admin.view_course', course_id=course.id) }}">{{ course.title }}</a>
                         </div>
 
-                        <div class="module w100 ps card-content">
+                        <div class="module w100 card-content">
                             {{ course.description }}
                         </div>
                     </div>

@@ -38,9 +38,23 @@ $x4-font: 4em;
     font-style: italic;
 }
 
+@font-face {
+	font-family: "Dank Mono";
+    src: url("{{ url_for('frontend.static', filename='font/DankMono-Regular.ttf') }}");
+    font-weight: 400;
+}
+
+@font-face {
+	font-family: "Dank Mono";
+    src: url("{{ url_for('frontend.static', filename='font/DankMono-Italic.ttf') }}");
+    font-weight: 400;
+    font-style: italic;
+}
+
 
 $heading-font-family: 'IBM Plex Sans', sans-serif;
 $content-font-family: 'Nunito', sans-serif;
+$mono-font-family: 'Dank Mono', monospace;
 
 
 /* Breakpoints */

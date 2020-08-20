@@ -6,6 +6,9 @@
         <div class="module w65 prl">
             <div class="container">
                 <div class="module w100 pbm mbm overview">
+                    <p class="bold">
+                        <a href="{{ url_for('admin.view_stage', stage_id=step.parent_stage)}}">
+                            <i class="fas fa-arrow-left"></i> Back to editing unit</a></p>
                     <h2>{{step.title}}</h2>
                     <p>{{step.description}}</p>
                 </div>
@@ -21,13 +24,14 @@
             <div class="container">
                 <div class="module large w100 button light mbs text-center" id="button-edit-resource">
                     <a href="{{ url_for('admin.edit_step', step_id=step.id) }}" id="a-edit-resource">
-                        Edit Step Details
+                        Edit Lesson Details
                     </a>
                 </div>
 
-                <div class="module large w100 button light mbs text-center" id="button-edit-resource">
-                    <a href="{{ url_for('admin.view_stage', stage_id=step.parent_stage) }}" id="a-edit-resource">
-                        Back to Stage
+                <div class="module large w100 button light mbs text-center" id="button-edit-course">
+                    <a href="{{ url_for('frontend.view_step', course_slug=course.slug, stage_id=step.parent_stage, step_id=step.id) }}"
+                        id="a-view-course">
+                        View Lesson
                     </a>
                 </div>
             </div>

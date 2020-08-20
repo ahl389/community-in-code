@@ -4,7 +4,7 @@
 <section class="banner">
     <div class="container">
         <div class="module w100 mbm">
-            <h2>Edit Step</h2>
+            <h2>Edit Lesson</h2>
         </div>
 
         <div class="module w50 prl">
@@ -21,7 +21,7 @@
                             </p>
                             <p>
                                 {{ step_form.description.label }}<br>
-                                {{ step_form.description(rows=8) }}
+                                {{ step_form.description(rows=5) }}
                             </p>
 
                             <label>Stage</label><br>
@@ -36,12 +36,15 @@
                             </select>
                         </div>
 
-                        <div class="module w100">
+                        <div class="module w100 flask-pagedown-preview">
                             <h3 class="mbm">Content</h3>
                             {{ step_form.content(only_input=True, rows=20) }}
                         </div>
 
-                        <p>{{ step_form.submit(class="button light bottom-fixed module w40") }}</p>
+                        <div class="module w40 button large bold text-center inverse bottom-fixed">
+                            {{ step_form.submit() }}
+                        </div>
+
                     </form>
                 </div>
 
@@ -101,6 +104,8 @@
         right: 5%;
         padding-bottom: 100px;
         overflow: scroll;
+        top: 150px;
+        bottom: 100px;
     }
 </style>
 
