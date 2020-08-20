@@ -92,8 +92,7 @@
     </section>
 
 
-
-    {% if current_user.role.name == 'admin' %}
+    {% if current_user.role and current_user.role.name == 'admin' %}
     <a href="{{ url_for('admin.index')  }}">
         <div class="module text-center inverse button large bold" id="admin-toggle">
             Admin
