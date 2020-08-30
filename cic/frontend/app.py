@@ -106,6 +106,11 @@ def find():
 @frontend.route('/courses/<course_slug>')
 def view_course(course_slug):
     course = Course.get_by_first(slug=course_slug)
+
+    if course.draft:
+        if not current_user.role or current_user.role.name != 'admin':
+            return redirect(url_for('frontend.index'))
+
     author = User.get(course.author)
     units = Stage.get_many(course.stages.split(','))
     units.sort(key=lambda x: x.order)
@@ -127,7 +132,7 @@ def enroll(course_id):
     course = Course.get(course_id)
     enrollment = Enrollment(user_id=current_user.id, course_id=course_id)
     enrollment.save()
-    return redirect(url_for('frontend.view_course', course_slug=course_slug))
+    return redirect(url_for('frontend.view_course', course_slug=course.slug))
 
 
 @frontend.route('/courses/<course_slug>/<stage_id>')
@@ -135,6 +140,11 @@ def enroll(course_id):
 def view_unit(course_slug, stage_id):
     course = Course.get_by_first(slug=course_slug)
     unit = Stage.get(stage_id)
+
+    if unit.draft:
+        if not current_user.role or current_user.role.name != 'admin':
+            return redirect(url_for('frontend.index'))
+
     steps = Step.get_many(unit.steps.split(','))
     steps.sort(key=lambda x: x.order)
     return render_template('frontend/unit.html', course=course, unit=unit, steps=steps)
@@ -147,6 +157,10 @@ def view_step(course_slug, stage_id, step_id):
     unit = Stage.get(stage_id)
     steps = Step.get_many(unit.steps.split(','))
     step = Step.get(step_id)
+
+    if step.draft:
+        if not current_user.role or current_user.role.name != 'admin':
+            return redirect(url_for('frontend.index'))
 
     next_step = None
     prev_step = None

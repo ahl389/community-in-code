@@ -7,6 +7,9 @@
     <section class="banner" id="course-{{ course.title }}">
         <div class="container">
             <div class="module w70">
+                {% if course.draft %}
+                <div class="module preview-flag">Preview</div>
+                {% endif %}
                 <h2>{{ course.title }}</h2>
                 <p class="large">{{ course.description }}</p>
                 <p>Course created by {{ author.name }}</p>
@@ -17,12 +20,14 @@
     <section class="banner" style="background-color:#f5f5f5">
         <div class="container">
             {% for unit in units %}
+            {% if not unit.draft %}
             <div class="module w100 pm mbm card">
                 <a href="{{ url_for('frontend.view_unit', course_slug=course.slug, stage_id=unit.id) }}">
                     <h4 class="xl mbs">Unit {{ unit.order }}: {{ unit.title }}</h4>
                 </a>
                 <p>{{ unit.description }}</p>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
     </section>

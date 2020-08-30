@@ -45,6 +45,7 @@ class CourseForm(FlaskForm):
     description = TextAreaField('Description')
     stages = HiddenField('Stages')
     slug = StringField('Slug', validators=[DataRequired()])
+    draft = BooleanField('Is this a draft?')
     submit = SubmitField('Save')
 
 
@@ -53,6 +54,7 @@ class StageForm(FlaskForm):
     description = TextAreaField('Description')
     order = HiddenField('Order')
     steps = HiddenField('Steps')
+    draft = BooleanField('Is this a draft?')
     submit = SubmitField('Save')
 
 
@@ -64,6 +66,7 @@ class StepForm(FlaskForm):
                             ('video', 'Video'), ('text', 'Text')])
     content = PageDownField('Content')
     notes = TextAreaField('Notes')
+    draft = BooleanField('Is this a draft?')
     submit = SubmitField('Save')
 
 

@@ -8,6 +8,9 @@
         <div class="container align-center main w80 w90-mob">
             <div class="module w100 ptxl">
                 <h1 class="text-center mbm x2">{{ step.title }}</h1>
+                {% if step.draft %}
+                <div class="module preview-flag">Preview</div>
+                {% endif %}
             </div>
 
             <div class="module w100">

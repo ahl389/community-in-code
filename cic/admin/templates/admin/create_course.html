@@ -24,6 +24,11 @@
                     {{ course_form.slug() }}
                 </div>
 
+                <div class="module w100 mbm">
+                    {{ course_form.draft.label }}<br>
+                    {{ course_form.draft() }}
+                </div>
+
                 <div class="module w100">
                     {{ course_form.submit(class="button light") }}
                 </div>

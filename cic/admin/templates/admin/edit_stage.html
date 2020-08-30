@@ -22,6 +22,11 @@
                             {{ stage_form.description.label }}<br>
                             {{ stage_form.description(rows=8) }}
                         </p>
+                        <p>
+                            {{ stage_form.draft.label }}<br>
+                            {{ stage_form.draft() }}
+                        </p>
+
 
                         <div class="button inverse module text-center large bottom-fixed w40">
                             {{ stage_form.submit(class="bold") }}</div>
