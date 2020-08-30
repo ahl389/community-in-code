@@ -297,6 +297,11 @@ class Course(BaseMixin, db.Model):
         default="General",
         nullable=True)
 
+    draft = db.Column(
+        db.Boolean(),
+        default=True
+    )
+
     def __repr__(self):
         return '<{}>'.format(self.title)
 
@@ -353,6 +358,11 @@ class Stage(BaseMixin, db.Model):
         index=False,
         unique=False,
         nullable=False)
+
+    draft = db.Column(
+        db.Boolean(),
+        default=True
+    )
 
     def serialize(self):
         return {
@@ -437,6 +447,11 @@ class Step(BaseMixin, db.Model):
 
     level = db.Column(
         db.Integer()
+    )
+
+    draft = db.Column(
+        db.Boolean(),
+        default=True
     )
 
     def serialize(self):

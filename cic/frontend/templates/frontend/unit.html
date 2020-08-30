@@ -10,6 +10,9 @@
                 <p class="bold">
                     <a href="{{ url_for('frontend.view_course', course_slug=course.slug)}}">
                         <i class="fas fa-arrow-left"></i> Back to course page</a></p>
+                {% if unit.draft %}
+                <div class="module preview-flag">Preview</div>
+                {% endif %}
                 <h2 class="mtm">{{ unit.title }}</h2>
                 <p class="large">{{ unit.description }} </p>
             </div>
@@ -19,6 +22,7 @@
     <section class="banner" style="background-color:  #fbfbfb">
         <div class="container">
             {% for step in steps %}
+            {% if not step.draft %}
             <div class="module w100 pm mbm card">
                 <a
                     href="{{ url_for('frontend.view_step', course_slug=course.slug, stage_id=unit.id, step_id=step.id) }}">
@@ -26,6 +30,7 @@
                 </a>
                 <p>{{ step.description }}</p>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
     </section>

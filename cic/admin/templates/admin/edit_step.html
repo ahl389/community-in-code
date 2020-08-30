@@ -41,6 +41,11 @@
                             {{ step_form.content(only_input=True, rows=20) }}
                         </div>
 
+                        <div class="module w100 mbm">
+                            {{ step_form.draft.label }}<br>
+                            {{ step_form.draft() }}
+                        </div>
+
                         <div class="module w40 button large bold text-center inverse bottom-fixed">
                             {{ step_form.submit() }}
                         </div>
