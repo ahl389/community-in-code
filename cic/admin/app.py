@@ -245,7 +245,7 @@ def view_stage(stage_id):
         return redirect(url_for('admin.view_stage', stage_id=stage_id))
 
     if stage.steps:
-        steps = Step.get_many(steps)
+        steps = Step.get_many(stage.steps.split(','))
         steps.sort(key=lambda x: x.order)
     else:
         steps = []
